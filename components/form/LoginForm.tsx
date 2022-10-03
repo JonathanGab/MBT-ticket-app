@@ -8,7 +8,7 @@ import {
   Image,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { gql, useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../hooks/mutations/useLogin';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 
@@ -22,8 +22,6 @@ export default function LoginForm() {
   const [hashedPassword, setHashedPassword] = useState<string>('');
   const [validation, setValidation] = useState('');
   const { setIsLogged } = useContext(LoginContext) as ILoginContext;
-
-  const navigation = useNavigation();
 
   const [loginUser, { data, error }] = useMutation(LOGIN);
 
@@ -70,11 +68,6 @@ export default function LoginForm() {
           <Text style={styles.textButton}>Connexion</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <TouchableOpacity style={styles.inscription}>
-          <Text style={styles.textButtonInscription}>Inscription</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -114,16 +107,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: 35,
   },
-  inscription: {
-    backgroundColor: 'orange',
-    borderRadius: 10,
-    marginTop: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 35,
-  },
   text: {
     fontWeight: 'bold',
     color: 'black',
@@ -132,11 +115,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  textButtonInscription: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'black',
   },
 });

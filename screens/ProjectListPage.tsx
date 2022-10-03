@@ -58,6 +58,7 @@ export default function ProjectListPage() {
       <ScrollView>
         {projectList.map((project: any) => (
           <ProjetList
+            key={project.id}
             title={project.title}
             description={project.description}
             status={project.status}

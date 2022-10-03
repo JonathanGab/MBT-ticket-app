@@ -71,11 +71,6 @@ export default function CreateAccountForm() {
           <Text style={styles.textButton}>Create</Text>
         </TouchableOpacity>
       </View>
-      <View>
-        <TouchableOpacity style={styles.inscription}>
-          <Text style={styles.textButtonInscription}>I have an account</Text>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 }
@@ -114,16 +109,6 @@ const styles = StyleSheet.create({
     width: 300,
     height: 35,
   },
-  inscription: {
-    backgroundColor: 'orange',
-    borderRadius: 10,
-    marginTop: 10,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 35,
-  },
   text: {
     fontWeight: 'bold',
     color: 'black',
@@ -132,11 +117,5 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  textButtonInscription: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: 'black',
   },
 });

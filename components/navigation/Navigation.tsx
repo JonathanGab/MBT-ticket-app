@@ -16,54 +16,49 @@ export default function Navigation() {
   const { isLogged } = useContext(LoginContext) as ILoginContext;
   console.log(isLogged);
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName: any;
-            if (route.name === 'Login') {
-              iconName = focused ? 'log-in' : 'log-in-outline';
-              size = 24;
-            } else if (route.name === 'CreateAccountPage') {
-              iconName = focused ? 'person-add' : 'person-add-outline';
-              size = 24;
-            } else if (route.name === 'ProjectListPage') {
-              iconName = focused ? 'list' : 'list-outline';
-              size = 24;
-            } else if (route.name === 'ProjectCreationPage') {
-              iconName = focused ? 'add-circle' : 'add-circle-outline';
-              size = 24;
-            } else if (route.name === 'AboutPage') {
-              iconName = focused
-                ? 'information-circle'
-                : 'information-circle-outline';
-              size = 24;
-            }
-            return <Ionicons name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: 'orange',
-          tabBarInactiveTintColor: 'gray',
-        })}
-      >
-        {!isLogged ? (
-          <Tab.Group>
-            <Tab.Screen name="Login" component={LoginPage} />
-            <Tab.Screen
-              name="CreateAccountPage"
-              component={CreateAccountPage}
-            />
-          </Tab.Group>
-        ) : (
-          <Tab.Group>
-            <Tab.Screen name="ProjectListPage" component={ProjectListPage} />
-            <Tab.Screen
-              name="ProjectCreationPage"
-              component={ProjectCreationPage}
-            />
-            <Tab.Screen name="AboutPage" component={AboutPage} />
-          </Tab.Group>
-        )}
-      </Tab.Navigator>
-    </NavigationContainer>
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName: any;
+          if (route.name === 'Login') {
+            iconName = focused ? 'log-in' : 'log-in-outline';
+            size = 24;
+          } else if (route.name === 'CreateAccountPage') {
+            iconName = focused ? 'person-add' : 'person-add-outline';
+            size = 24;
+          } else if (route.name === 'ProjectListPage') {
+            iconName = focused ? 'list' : 'list-outline';
+            size = 24;
+          } else if (route.name === 'ProjectCreationPage') {
+            iconName = focused ? 'add-circle' : 'add-circle-outline';
+            size = 24;
+          } else if (route.name === 'AboutPage') {
+            iconName = focused
+              ? 'information-circle'
+              : 'information-circle-outline';
+            size = 24;
+          }
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: 'orange',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
+      {!isLogged ? (
+        <Tab.Group>
+          <Tab.Screen name="Login" component={LoginPage} />
+          <Tab.Screen name="CreateAccountPage" component={CreateAccountPage} />
+        </Tab.Group>
+      ) : (
+        <Tab.Group>
+          <Tab.Screen name="ProjectListPage" component={ProjectListPage} />
+          <Tab.Screen
+            name="ProjectCreationPage"
+            component={ProjectCreationPage}
+          />
+          <Tab.Screen name="AboutPage" component={AboutPage} />
+        </Tab.Group>
+      )}
+    </Tab.Navigator>
   );
 }
