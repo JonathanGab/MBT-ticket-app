@@ -14,7 +14,7 @@ export default function App() {
     uri: 'http://192.168.1.23:4000/graphql',
     cache: new InMemoryCache(),
   });
-  // console.log('isLogged in APP : ', isLogged);
+
   return (
     <ApolloProvider client={client}>
       <LoginProvider>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import LoginPage from '../../screens/LoginPage';
@@ -20,19 +20,19 @@ export default function Navigation() {
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName: any;
-          if (route.name === 'Login') {
+          if (route.name === 'Sign In') {
             iconName = focused ? 'log-in' : 'log-in-outline';
             size = 24;
-          } else if (route.name === 'CreateAccountPage') {
+          } else if (route.name === 'Sign Up') {
             iconName = focused ? 'person-add' : 'person-add-outline';
             size = 24;
-          } else if (route.name === 'ProjectListPage') {
+          } else if (route.name === 'List') {
             iconName = focused ? 'list' : 'list-outline';
             size = 24;
-          } else if (route.name === 'ProjectCreationPage') {
+          } else if (route.name === 'Create') {
             iconName = focused ? 'add-circle' : 'add-circle-outline';
             size = 24;
-          } else if (route.name === 'AboutPage') {
+          } else if (route.name === 'About') {
             iconName = focused
               ? 'information-circle'
               : 'information-circle-outline';
@@ -46,21 +46,18 @@ export default function Navigation() {
     >
       {!isLogged ? (
         <Tab.Group>
-          <Tab.Screen name="Login" component={LoginPage} />
-          <Tab.Screen name="CreateAccountPage" component={CreateAccountPage} />
+          <Tab.Screen name="Sign In" component={LoginPage} />
+          <Tab.Screen name="Sign Up" component={CreateAccountPage} />
         </Tab.Group>
       ) : (
         <Tab.Group>
           <Tab.Screen
-            name="ProjectListPage"
+            name="List"
             component={ProjectListPage}
             options={{ headerStyle: { backgroundColor: 'transparent' } }}
           />
-          <Tab.Screen
-            name="ProjectCreationPage"
-            component={ProjectCreationPage}
-          />
-          <Tab.Screen name="AboutPage" component={AboutPage} />
+          <Tab.Screen name="Create" component={ProjectCreationPage} />
+          <Tab.Screen name="About" component={AboutPage} />
         </Tab.Group>
       )}
     </Tab.Navigator>
