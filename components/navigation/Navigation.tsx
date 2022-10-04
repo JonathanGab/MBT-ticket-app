@@ -51,7 +51,11 @@ export default function Navigation() {
         </Tab.Group>
       ) : (
         <Tab.Group>
-          <Tab.Screen name="ProjectListPage" component={ProjectListPage} />
+          <Tab.Screen
+            name="ProjectListPage"
+            component={ProjectListPage}
+            options={{ headerStyle: { backgroundColor: 'transparent' } }}
+          />
           <Tab.Screen
             name="ProjectCreationPage"
             component={ProjectCreationPage}

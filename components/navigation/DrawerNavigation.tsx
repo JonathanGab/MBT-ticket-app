@@ -11,7 +11,13 @@ const Drawer = createDrawerNavigator();
 
 export default function DrawerNavigation() {
   return (
-    <Drawer.Navigator initialRouteName="Home">
+    <Drawer.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        headerShown: false,
+        headerTransparent: true,
+      }}
+    >
       <Drawer.Screen name="Home" component={Navigation} />
       <Drawer.Screen name="Profile" component={ProfilePage} />
       <Drawer.Screen name="Settings" component={SettingsPage} />
