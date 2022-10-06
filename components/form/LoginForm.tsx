@@ -11,34 +11,40 @@ import { useNavigation } from '@react-navigation/native';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../../hooks/mutations/useLogin';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
+import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
+import ProjectListPage from '../../screens/ProjectListPage';
 
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 interface IUser {
   email: string;
   hashedPassword: string;
 }
 
+type ListScreenProp = BottomTabNavigationProp<{ List: undefined }, 'List'>;
+
 export default function LoginForm() {
   const [email, setEmail] = useState<string>('');
   const [hashedPassword, setHashedPassword] = useState<string>('');
   const [validation, setValidation] = useState('');
-  const { setIsLogged } = useContext(LoginContext) as ILoginContext;
-
+  const { setUserId, setToken } = useContext(AuthContext) as IAuthContextProps;
   const [loginUser, { data, error }] = useMutation(LOGIN);
+  const navigation = useNavigation<ListScreenProp>();
 
   const login = async (e: any): Promise<void> => {
     e.preventDefault();
     try {
-      await loginUser({
+      const logUser = await loginUser({
         variables: {
           email: email,
           hashedPassword: hashedPassword,
         },
       });
-      setIsLogged(true);
+      setUserId(logUser?.data?.login?.userId);
+      setToken(logUser?.data?.login?.token);
+      navigation.navigate('List');
     } catch (err) {
       setValidation('⚠️ Email or password is incorrect, please try again.');
       console.error({ message: err });
-      // setIsLogged(false);
     }
   };
 
@@ -46,7 +52,7 @@ export default function LoginForm() {
     <View style={styles.container}>
       <View>
         <TextInput
-          placeholder="Email..."
+          placeholder="Email"
           style={styles.input}
           // eslint-disable-next-line no-shadow
           value={email}
@@ -56,7 +62,7 @@ export default function LoginForm() {
       <View>
         <TextInput
           secureTextEntry
-          placeholder="Password..."
+          placeholder="Password"
           style={styles.input}
           value={hashedPassword}
           onChangeText={(text) => setHashedPassword(text)}
@@ -78,7 +84,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#c5d5e4',
+    backgroundColor: '#0f4c5c',
   },
   logo: {
     height: 150,
@@ -98,7 +104,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   connexion: {
-    backgroundColor: 'orange',
+    backgroundColor: '#e36414',
     borderRadius: 10,
     marginTop: 10,
     display: 'flex',

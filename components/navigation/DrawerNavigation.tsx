@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Alert, Text, TouchableOpacity, View } from 'react-native';
 import {
   createDrawerNavigator,
@@ -10,10 +10,13 @@ import Navigation from './Navigation';
 import ProfilePage from '../../screens/ProfilePage';
 import SettingsPage from '../../screens/SettingsPage';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ILoginContext, LoginContext } from '../../contexts/LoginContext';
 
 const Drawer = createDrawerNavigator();
 
 function DrawerItemProps(props: any) {
+  const { removeData } = useContext(LoginContext) as ILoginContext;
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flex: 1 }}>
       <DrawerItemList {...props} />
@@ -23,7 +26,7 @@ function DrawerItemProps(props: any) {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              backgroundColor: '#d7263d',
+              backgroundColor: '#9A031E',
               width: '100%',
               borderRadius: 10,
               padding: 10,
@@ -38,9 +41,7 @@ function DrawerItemProps(props: any) {
             />
           </View>
         )}
-        onPress={() => {
-          alert('Log out');
-        }}
+        onPress={removeData}
         style={{
           flex: 1,
           width: '100%',
@@ -54,10 +55,10 @@ function DrawerItemProps(props: any) {
 export default function DrawerNavigation() {
   return (
     <Drawer.Navigator
-      initialRouteName="Home"
       drawerContent={(props) => <DrawerItemProps {...props} />}
       screenOptions={{
-        headerShown: false,
+        // headerShown: false,
+        headerShown: true,
       }}
     >
       <Drawer.Screen name="Home" component={Navigation} />

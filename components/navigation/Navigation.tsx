@@ -1,7 +1,5 @@
 import React, { useContext } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import LoginPage from '../../screens/LoginPage';
 import ProjectListPage from '../../screens/ProjectListPage';
 import ProjectCreationPage from '../../screens/ProjectCreationPage';
@@ -9,12 +7,14 @@ import AboutPage from '../../screens/AboutPage';
 import CreateAccountPage from '../../screens/CreateAccountPage';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
+import { AsyncStorageType } from '../../contexts/LoginContext';
 
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {
-  const { isLogged } = useContext(LoginContext) as ILoginContext;
-  console.log(isLogged);
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
+  // kill async on logout
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -40,11 +40,11 @@ export default function Navigation() {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: 'orange',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#e36414',
+        tabBarInactiveTintColor: '#ced4da',
       })}
     >
-      {!isLogged ? (
+      {valueAsyncStorage.token === null ? (
         <Tab.Group>
           <Tab.Screen name="Sign In" component={LoginPage} />
           <Tab.Screen name="Sign Up" component={CreateAccountPage} />

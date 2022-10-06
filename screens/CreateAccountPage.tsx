@@ -4,7 +4,7 @@ import CreateAccountForm from '../components/form/CreateAccountForm';
 
 export default function CreateAccountPage() {
   return (
-    <View>
+    <View style={{ height: '100%' }}>
       <CreateAccountForm />
     </View>
   );

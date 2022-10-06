@@ -13,7 +13,7 @@ interface IProjectListProps {
   users: IUsers[];
 }
 
-export default function ProjetList({
+export default function ProjectList({
   title,
   description,
   status,

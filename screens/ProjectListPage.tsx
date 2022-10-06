@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import React from 'react';
-import ProjetList from '../components/card/ProjetList';
+import ProjectList from '../components/card/ProjectList';
 
 export default function ProjectListPage() {
   const projectList = [
@@ -57,7 +57,7 @@ export default function ProjectListPage() {
     <View style={styles.container}>
       <ScrollView>
         {projectList.map((project: any) => (
-          <ProjetList
+          <ProjectList
             key={project.id}
             title={project.title}
             description={project.description}

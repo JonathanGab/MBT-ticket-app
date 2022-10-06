@@ -1,17 +1,21 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import ProfileCard from '../components/card/ProfileCard';
+import { useGetCurrentUser } from '../hooks/query/useGetUser';
+import IUser from '../hooks/query/useGetUser';
+import { ILoginContext, LoginContext } from '../contexts/LoginContext';
 
 export default function ProfilePage() {
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [hashedPassword, setHashedPassword] = React.useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [hashedPassword, setHashedPassword] = useState('');
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
+
+  const user: IUser | undefined | null = useGetCurrentUser(
+    valueAsyncStorage.userId as string
+  );
 
   const userProfile = {
-    id: 1,
-    name: 'John Doe',
-    email: 'John_Doe@MBT.com',
-    hashedPassword: '123456789',
     autobiography: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit.',
     profilePicture: 'https://i.pravatar.cc/300',
   };
@@ -19,12 +23,12 @@ export default function ProfilePage() {
   return (
     <View style={styles.container}>
       <ProfileCard
-        name={userProfile.name}
+        name={user?.name}
         autobiography={userProfile.autobiography}
         setName={setName}
-        email={userProfile.email}
+        email={user?.email}
         setEmail={setEmail}
-        hashedPassword={userProfile.hashedPassword}
+        hashedPassword={user?.hashedPassword}
         setHashedPassword={setHashedPassword}
         imageUrl={userProfile.profilePicture}
       />
@@ -35,5 +39,6 @@ export default function ProfilePage() {
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    backgroundColor: '#f6f6f6',
   },
 });

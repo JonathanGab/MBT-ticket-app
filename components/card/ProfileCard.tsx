@@ -6,13 +6,16 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import React from 'react';
-
+import React, { useState, useContext } from 'react';
+import { useMutation } from '@apollo/client';
+import { UPDATE_CURRENT_USER_PASSWORD } from '../../hooks/mutations/UseUpdateCurrentUserPassword';
+import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
+import Ionicons from '@expo/vector-icons/Ionicons';
 interface IProfileProps {
   imageUrl: string;
-  name: string;
-  email: string;
-  hashedPassword: string;
+  name: string | undefined;
+  email: string | undefined;
+  hashedPassword: string | undefined;
   setName: React.Dispatch<React.SetStateAction<string>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   setHashedPassword: React.Dispatch<React.SetStateAction<string>>;
@@ -20,6 +23,30 @@ interface IProfileProps {
 }
 
 export default function ProfileCard(props: IProfileProps) {
+  const [editPwd, setEditPwd] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
+
+  const [updateCurrentUserPassword, { data, error }] = useMutation(
+    UPDATE_CURRENT_USER_PASSWORD
+  );
+
+  const updatePassword = async (e: any): Promise<void> => {
+    e.preventDefault();
+    try {
+      await updateCurrentUserPassword({
+        variables: {
+          updateCurrentUserPasswordId: valueAsyncStorage.userId,
+          currentPassword,
+          newPassword,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.box}>
@@ -36,7 +63,7 @@ export default function ProfileCard(props: IProfileProps) {
         <View style={styles.bottom}>
           <View style={styles.input_container}>
             <View>
-              <Text>Name</Text>
+              <Text>Your name</Text>
               <TextInput
                 style={styles.input}
                 defaultValue={props.name}
@@ -45,7 +72,7 @@ export default function ProfileCard(props: IProfileProps) {
               />
             </View>
             <View style={styles.margin_input}>
-              <Text>Email</Text>
+              <Text>Your email</Text>
               <TextInput
                 style={styles.input}
                 defaultValue={props.email}
@@ -53,18 +80,46 @@ export default function ProfileCard(props: IProfileProps) {
                 onChangeText={(text) => props.setEmail(text)}
               />
             </View>
-            <View>
-              <Text>Password</Text>
-              <TextInput
-                secureTextEntry
-                style={styles.input}
-                defaultValue={props.hashedPassword}
-                onChangeText={(text) => props.setHashedPassword(text)}
-              />
-            </View>
             <TouchableOpacity style={styles.saveButton}>
               <Text style={styles.saveTextButton}>Save</Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.editPasswordButton}
+              onPress={() => setEditPwd(!editPwd)}
+            >
+              <Text style={styles.text}>Edit your password</Text>
+            </TouchableOpacity>
+            {editPwd && (
+              <View style={styles.editPwd}>
+                <Text>Your current password</Text>
+                <TextInput
+                  secureTextEntry
+                  placeholder="**********"
+                  style={styles.input}
+                  value={currentPassword}
+                  onChangeText={(text) => setCurrentPassword(text)}
+                />
+                <View style={styles.margin_input}>
+                  <Text>Your new password</Text>
+                  <TextInput
+                    secureTextEntry
+                    style={styles.input}
+                    placeholder="**********"
+                    value={newPassword}
+                    onChangeText={(text) => setNewPassword(text)}
+                  />
+                </View>
+                <View>
+                  <TouchableOpacity
+                    style={styles.savePwdButton}
+                    onPress={(e) => updatePassword(e)}
+                  >
+                    <Text style={styles.saveTextButton}>Change password</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
         </View>
       </View>
@@ -131,13 +186,33 @@ const styles = StyleSheet.create({
   margin_input: {
     marginVertical: 30,
   },
+  editPasswordButton: {
+    flexDirection: 'row',
+    marginTop: 30,
+    height: 20,
+    width: '100%',
+    alignItems: 'center',
+  },
+  text: {
+    height: '100%',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  editPwd: {
+    marginTop: 30,
+  },
   saveButton: {
-    marginTop: '50%',
     width: '100%',
     padding: 15,
-
     borderRadius: 10,
-    backgroundColor: '#f9a03f',
+    backgroundColor: '#FB8B24',
+  },
+  savePwdButton: {
+    width: '100%',
+    padding: 15,
+    marginBottom: 20,
+    borderRadius: 10,
+    backgroundColor: '#FB8B24',
   },
   saveTextButton: {
     textAlign: 'center',

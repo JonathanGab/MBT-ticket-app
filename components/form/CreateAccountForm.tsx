@@ -38,7 +38,7 @@ export default function CreateAccountForm() {
     <View style={styles.container}>
       <View>
         <TextInput
-          placeholder="Name..."
+          placeholder="Name"
           style={styles.input}
           // eslint-disable-next-line no-shadow
           value={name}
@@ -47,7 +47,7 @@ export default function CreateAccountForm() {
       </View>
       <View>
         <TextInput
-          placeholder="Email..."
+          placeholder="Email"
           style={styles.input}
           // eslint-disable-next-line no-shadow
           value={email}
@@ -57,7 +57,7 @@ export default function CreateAccountForm() {
       <View>
         <TextInput
           secureTextEntry
-          placeholder="Password..."
+          placeholder="Password"
           style={styles.input}
           value={hashedPassword}
           onChangeText={(text) => setHashedPassword(text)}
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#c5d5e4',
+    backgroundColor: '#0f4c5c',
   },
   logo: {
     height: 150,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   connexion: {
-    backgroundColor: 'orange',
+    backgroundColor: '#e36414',
     borderRadius: 10,
     marginTop: 10,
     display: 'flex',
