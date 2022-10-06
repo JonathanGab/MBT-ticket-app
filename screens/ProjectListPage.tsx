@@ -55,9 +55,9 @@ export default function ProjectListPage() {
   ];
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView style={styles.card}>
         {projectList.map((project: any) => (
-          <ProjetList
+          <ProjetList 
             key={project.id}
             title={project.title}
             description={project.description}
@@ -72,7 +72,22 @@ export default function ProjectListPage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#edf2ef',
+    flex:1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#c5d5e4',
   },
+  card:{
+    fontWeight: 'bold',
+    color: 'black',
+    margin:100,
+    flex:3,
+    width:300
+    
+  }
+ 
+  
+  
+  
+  
 });
