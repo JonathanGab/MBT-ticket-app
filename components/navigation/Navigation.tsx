@@ -40,7 +40,7 @@ export default function Navigation() {
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#e36414',
+        tabBarActiveTintColor: '#E29578',
         tabBarInactiveTintColor: '#ced4da',
       })}
     >

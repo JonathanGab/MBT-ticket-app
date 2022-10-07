@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#0f4c5c',
+    backgroundColor: '#EDF6F9',
   },
   logo: {
     height: 150,
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   connexion: {
-    backgroundColor: '#e36414',
+    backgroundColor: '#E29578',
     borderRadius: 10,
     marginTop: 10,
     display: 'flex',

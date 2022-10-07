@@ -1,10 +1,11 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet } from 'react-native';
+import React from 'react';
+import ProjectCreateForm from '../components/form/ProjectCreateForm';
 
 export default function ProjectCreationPage() {
   return (
     <View>
-      <Text>ProjectCreationPage</Text>
+      <ProjectCreateForm />
     </View>
-  )
+  );
 }

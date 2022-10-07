@@ -11,6 +11,7 @@ import { useMutation } from '@apollo/client';
 import { UPDATE_CURRENT_USER_PASSWORD } from '../../hooks/mutations/UseUpdateCurrentUserPassword';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
+
 interface IProfileProps {
   imageUrl: string;
   name: string | undefined;
@@ -205,14 +206,14 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    backgroundColor: '#FB8B24',
+    backgroundColor: '#E29578',
   },
   savePwdButton: {
     width: '100%',
     padding: 15,
     marginBottom: 20,
     borderRadius: 10,
-    backgroundColor: '#FB8B24',
+    backgroundColor: '#E29578',
   },
   saveTextButton: {
     textAlign: 'center',
