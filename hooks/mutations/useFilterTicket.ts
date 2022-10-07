@@ -16,20 +16,20 @@ export const GET_FILTERED_TICKETS = gql`
 `;
 
 export const useFilterTicket = (
-    project: Number,
-    user: Number
+  project: Number,
+  user: Number
 ): ITicket[] | null => {
-    const { loading, error, data } = useQuery(GET_FILTERED_TICKETS, {
-        variables: {
-            users: user,
-            projectId: project,
-        },
-    });
-    if (loading) {
-        return null;
-    } else if (error) {
-        console.log(error);
-        return null;
-    }
-    return data?.getAllTicketFiltered;
+  const { loading, error, data } = useQuery(GET_FILTERED_TICKETS, {
+    variables: {
+      users: user,
+      projectId: project,
+    },
+  });
+  if (loading) {
+    return null;
+  } else if (error) {
+    console.log(error);
+    return null;
+  }
+  return data?.getAllTicketFiltered;
 };

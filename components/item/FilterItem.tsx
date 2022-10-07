@@ -15,19 +15,20 @@ export default function FilterItem({ setFilterValue, actualValues }: IProps): JS
     function setProject(newV: string): void {
         setFilterValue({
             project: parseInt(newV),
-            user: actualValues.user,
+            // user: actualValues.user,
+            user: 1,
         });
     }
-    function setUser(newV: string): void {
-        setFilterValue({
-            project: actualValues.project,
-            user: parseInt(newV),
-        });
-    }
+    // function setUser(newV: string): void {
+    //     setFilterValue({
+    //         project: actualValues.project,
+    //         user: parseInt(newV),
+    //     });
+    // }
     // a modifier
     const dataProject: IProject[] | null = useGetProject();
-    const dataUser: IUser[] | null = useGetUsers();
-    if (dataProject === null || dataUser === null) {
+    // const dataUser: IUser[] | null = useGetUsers();
+    if (/*!dataUser || dataUser?.length < 1 ||*/ !dataProject || dataProject?.length < 1) {
         return (
             <View>
                 <Text>loading</Text>
@@ -38,7 +39,7 @@ export default function FilterItem({ setFilterValue, actualValues }: IProps): JS
     return (
         <View>
             <DropdownComponent data={dataProject} callback={setProject} label="Project" />
-            <DropdownComponent data={dataUser} callback={setUser} label="User" />
+            {/* <DropdownComponent data={dataUser} callback={setUser} label="User" /> */}
         </View>
     );
 }

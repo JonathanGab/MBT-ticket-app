@@ -10,7 +10,7 @@ const DropdownComponent = ({data , label , callback}: {data:any, label: string, 
     if (value || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: 'blue' }]}>
-          {'Select '+ label}
+          {'Select '+ label.toString()}
         </Text>
       );
     }
@@ -28,17 +28,17 @@ const DropdownComponent = ({data , label , callback}: {data:any, label: string, 
         data={data}
         search
         maxHeight={300}
-        labelField="label"
-        valueField="value"
+        labelField="title"
+        valueField="id"
         placeholder={!isFocus ? 'Select '+ label : '...'}
         searchPlaceholder="Search..."
-        value={value}
+        value={data}
         onFocus={() => setIsFocus(true)}
         onBlur={() => setIsFocus(false)}
-        onChange={(item: { value: React.SetStateAction<null>; }) => {
-          setValue(item.value);
+        onChange={(item: { id: any; }) => {
+          setValue(item.id);
           setIsFocus(false);
-          callback(item.value);
+          callback(item);
         }
       }
       />

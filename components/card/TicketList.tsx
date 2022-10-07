@@ -1,10 +1,10 @@
 import React from 'react';
 import { View,Text, SafeAreaView, FlatList } from 'react-native';
-import { TaskItem } from '../item/TaskItem';
+import { TicketItem } from '../item/TicketItem';
 import { useFilterTicket } from '../../hooks/mutations/useFilterTicket';
 import IFilter from '../Interface/IFilter';
 import ITicket from '../Interface/ITicket';
-import { stylesTaskList } from '../style';
+import { stylesTicketList } from '../style';
 
 interface IProps {
     filters: IFilter;
@@ -17,14 +17,14 @@ export default function TickerList({ filters }: IProps): JSX.Element {
     );
 
     const renderItem = ({ item }: { item: ITicket }) => (
-        <TaskItem id={item.id} title={item.title} priority={item.priority} difficulty={item.difficulty} status={item.status} />
+        <TicketItem id={item.id} title={item.title} priority={item.priority} difficulty={item.difficulty} status={item.status} />
     );
 
     if (!tickets || tickets?.length < 1) {
         return <Text>No tickets :/</Text>;
     }
     return (
-        <View style={stylesTaskList.containerList}>
+        <View style={stylesTicketList.containerList}>
             <SafeAreaView>
                 <FlatList
                     data={tickets}

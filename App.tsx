@@ -12,7 +12,6 @@ import DisplayNav from './components/navigation/DisplayNav';
 export default function App() {
   const client = new ApolloClient({
     uri: 'http://192.168.1.42:4000/graphql',
-    // uri: 'http://192.168.1.23:4000/graphql',
     cache: new InMemoryCache(),
   });
   // console.log('isLogged in APP : ', isLogged);

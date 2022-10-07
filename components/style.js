@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const stylesTaskDetail = StyleSheet.create({
+export const stylesTicketDetail = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#5DADE2',
@@ -66,7 +66,7 @@ export const stylesTaskDetail = StyleSheet.create({
     },
 });
 
-export const stylesTaskList = StyleSheet.create({
+export const stylesTicketList = StyleSheet.create({
     container: {
         backgroundColor: 'white',
         padding: 16,
@@ -83,9 +83,12 @@ export const stylesTaskList = StyleSheet.create({
     },
 });
 
-export const stylesTaskItem = StyleSheet.create({
+export const stylesTicketItem = StyleSheet.create({
     item: {
-        backgroundColor: '#aed6f1',
+        backgroundColor: '#fff',
+        borderColor: '#0051FF',
+        borderWidth : 2,
+        borderRadius: 10,
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
@@ -97,8 +100,10 @@ export const stylesTaskItem = StyleSheet.create({
         },
       title: {
         fontSize: 32,
+        fontWeight: 'bold',
         textAlign: 'center',
         color: '#000',
+        width: '100%',
         },
     priority: {
         padding: 15,

@@ -1,5 +1,5 @@
 import { View, Text,  } from 'react-native';
-import { stylesTaskList } from '../components/style';
+import { stylesTicketList } from '../components/style';
 import React, { useState } from 'react';
 import  IFilter from '../components/Interface/IFilter';
 import FilterItem from '../components/item/FilterItem';
@@ -17,8 +17,8 @@ export default function Ticket() {
     }
 
     return (
-        <View style={stylesTaskList.container}>
-            <Text style={stylesTaskList.title}>Task List</Text>
+        <View style={stylesTicketList.container}>
+            <Text style={stylesTicketList.title}>Ticket List</Text>
             <FilterItem setFilterValue={handleFiltersValue} actualValues={filters}/>
             <TickerList filters={filters}/>
         </View>

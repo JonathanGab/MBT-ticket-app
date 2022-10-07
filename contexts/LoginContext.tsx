@@ -8,7 +8,7 @@ export interface ILoginContext {
 export const LoginContext = createContext<ILoginContext | null>(null);
 
 export default function LoginProvider({ children }: any) {
-  const [isLogged, setIsLogged] = useState(true);
+  const [isLogged, setIsLogged] = useState(false);
 
   return (
     <LoginContext.Provider value={{ isLogged, setIsLogged }}>

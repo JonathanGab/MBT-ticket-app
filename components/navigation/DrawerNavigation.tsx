@@ -7,7 +7,7 @@ import Navigation from './Navigation';
 import ProfilePage from '../../screens/ProfilePage';
 import SettingsPage from '../../screens/SettingsPage';
 import TaskListPage from '../../screens/TicketPage';
-import TaskDetail from '../../screens/TaskDetail';
+import TaskDetail from '../../screens/TicketDetail';
 
 const Drawer = createDrawerNavigator();
 
