@@ -13,6 +13,7 @@ import { CREATE_PROJECT } from '../../hooks/mutations/useCreateProject';
 import dayjs from 'dayjs';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 interface IProject {
   id: number;
   title: string;
@@ -39,6 +40,7 @@ export default function ProjectCreateForm(): JSX.Element {
   const [desc, setDesc] = useState<string>('');
   const [validation, setValidation] = useState('');
   const [addProject, { data, loading, error }] = useMutation(CREATE_PROJECT);
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
 
   const HandleProjectStatusChanges = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -56,21 +58,24 @@ export default function ProjectCreateForm(): JSX.Element {
       await addProject({
         variables: {
           title: projectName,
-          startTime: '2022-05-17T00:00:00.000Z',
-
+          startTime: startDate,
+          endTime: endDate,
           description: desc,
           status: 'active',
           users: [
             {
-              id: '7',
+              id: valueAsyncStorage.userId,
             },
           ],
         },
       });
+      setProjectName('');
+      setStartDate(new Date());
+      setEndDate(new Date());
+      setDesc('');
     } catch (err) {
       setValidation('⚠️ Incomplete data, please try again.');
       console.error({ message: err });
-      // setIsLogged(false);
     }
   };
 
@@ -143,7 +148,7 @@ export default function ProjectCreateForm(): JSX.Element {
                 name="calendar-outline"
                 size={24}
                 color={'black'}
-                style={{ position: 'absolute' }}
+                style={{ position: 'absolute', left: -7 }}
               />
               <DateTimePicker
                 style={styles.endDateTimePicker}
@@ -208,7 +213,7 @@ const styles = StyleSheet.create({
   },
   startDateTimePicker: {
     height: 30,
-    transform: [{ translateX: -50 }],
+    transform: [{ translateX: -40 }],
   },
   endPickerDate: {
     position: 'absolute',
