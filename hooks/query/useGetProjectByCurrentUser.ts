@@ -1,0 +1,47 @@
+import { gql, useQuery } from '@apollo/client';
+
+interface IUsers {
+  id: number;
+  name: string;
+}
+
+export default interface IProject {
+  id: number;
+  title: string;
+  description: string;
+  start_time: Date;
+  end_time?: Date;
+  status: string;
+  Users: IUsers[];
+  Tickets?: [{ id: number }];
+  picture_id?: number;
+}
+
+export const GET_PROJECT_BY_CURRENT_USER = gql`
+  query Query($getAllProjectsByCurrentUserIdId: ID) {
+    getAllProjectsByCurrentUserId(id: $getAllProjectsByCurrentUserIdId) {
+      id
+      Users {
+        id
+        name
+      }
+      title
+      description
+      status
+      start_time
+    }
+  }
+`;
+
+export const useGetProjectByCurrentUser = (id: number): IProject[] | null => {
+  const { loading, error, data } = useQuery(GET_PROJECT_BY_CURRENT_USER, {
+    variables: { getAllProjectsByCurrentUserIdId: id },
+  });
+  if (loading) {
+    return null;
+  } else if (error) {
+    console.error(error);
+    return null;
+  }
+  return data.getAllProjectsByCurrentUserId;
+};

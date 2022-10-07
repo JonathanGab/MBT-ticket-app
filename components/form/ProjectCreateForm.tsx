@@ -14,21 +14,7 @@ import dayjs from 'dayjs';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
-interface IProject {
-  id: number;
-  title: string;
-  description: string;
-  start_time: Date;
-  end_time?: Date;
-  daysLeft?: string;
-  status: string;
-  user_id: [object];
-  numUsers?: number;
-  Tickets?: [{ id: number }];
-  nbTicket?: number;
-  picture_id?: number;
-}
-
+import IProject from '../../hooks/query/useGetProjectByCurrentUser';
 export default function ProjectCreateForm(): JSX.Element {
   const dateFormat = 'yyyy-MM-DD';
   // State

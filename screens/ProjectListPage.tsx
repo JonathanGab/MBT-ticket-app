@@ -1,72 +1,36 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
-import React from 'react';
+import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
+import React, { useContext } from 'react';
 import ProjectList from '../components/card/ProjectList';
+import IProject, {
+  GET_PROJECT_BY_CURRENT_USER,
+  useGetProjectByCurrentUser,
+} from '../hooks/query/useGetProjectByCurrentUser';
+import { ILoginContext, LoginContext } from '../contexts/LoginContext';
 
 export default function ProjectListPage() {
-  const projectList = [
-    {
-      id: 1,
-      title: 'Mont-Blanc Project',
-      description: 'A project class with mountain.',
-      status: 'Active',
-      users: [
-        {
-          id: 1,
-          name: 'Jo',
-        },
-        {
-          id: 2,
-          name: 'Brand',
-        },
-      ],
-    },
-    {
-      id: 2,
-      title: 'Coffee Time Project',
-      description: 'A project class with coffee.',
-      status: 'Pending',
-      users: [
-        {
-          id: 3,
-          name: 'Pet',
-        },
-        {
-          id: 4,
-          name: 'Axe',
-        },
-      ],
-    },
-    {
-      id: 3,
-      title: 'Scooby-Gang Project',
-      description: 'A project class with dog.',
-      status: 'Active',
-      users: [
-        {
-          id: 5,
-          name: 'Will',
-        },
-        {
-          id: 6,
-          name: 'Sél',
-        },
-      ],
-    },
-  ];
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
+
+  const projectByUserId: IProject[] | undefined | null =
+    useGetProjectByCurrentUser(Number(valueAsyncStorage.userId));
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.card}>
-        {projectList.map((project: any) => (
-          <ProjectList
-            key={project.id}
-            title={project.title}
-            description={project.description}
-            status={project.status}
-            users={project.users}
-          />
-        ))}
-      </ScrollView>
+      <FlatList
+        data={projectByUserId}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={(item) => {
+          return (
+            <ProjectList
+              id={item.item.id}
+              title={item.item.title}
+              start_time={item.item.start_time}
+              description={item.item.description}
+              status={item.item.status}
+              Users={item.item.Users}
+            />
+          );
+        }}
+      />
     </View>
   );
 }
@@ -75,13 +39,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+
     backgroundColor: '#EDF6F9',
-  },
-  card: {
-    color: 'black',
-    margin: 100,
-    flex: 3,
-    width: 300,
   },
 });

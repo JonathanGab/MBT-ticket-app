@@ -9,7 +9,7 @@ import AuthProvider from './contexts/AuthContext';
 export default function App() {
   const client = new ApolloClient({
     uri: 'http://192.168.1.23:4000/graphql',
-    // uri: 'http://localhost:4000/graphql',
+    //  uri: 'http://localhost:4000/graphql',
     cache: new InMemoryCache(),
   });
 

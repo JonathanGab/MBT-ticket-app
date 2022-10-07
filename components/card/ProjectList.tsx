@@ -1,24 +1,13 @@
 import { View, Text, StyleSheet } from 'react-native';
-import React, { useState } from 'react';
-
-interface IUsers {
-  id: number;
-  name: string;
-}
-
-interface IProjectListProps {
-  title: string;
-  description: string;
-  status: string;
-  users: IUsers[];
-}
-
+import React, { useState, useContext } from 'react';
+import { useQuery } from '@apollo/client';
+import IProject from '../../hooks/query/useGetProjectByCurrentUser';
 export default function ProjectList({
   title,
   description,
   status,
-  users,
-}: IProjectListProps) {
+  Users,
+}: IProject) {
   return (
     <View style={styles.cardContainer}>
       <View style={styles.card}>
@@ -32,7 +21,7 @@ export default function ProjectList({
           {status}
         </Text>
         <Text>
-          {users?.map((user: any, index: any) => (
+          {Users?.map((user: any, index: any) => (
             <Text key={user.id} style={styles.users}>
               {(index ? ', ' : '') + user.name}
             </Text>
@@ -45,10 +34,10 @@ export default function ProjectList({
 
 const styles = StyleSheet.create({
   cardContainer: { borderWidth: 1, borderColor: 'grey' },
-  card: {},
+  card: { width: '100%', paddingHorizontal: 10, paddingVertical: 10 },
   title: { fontSize: 25, fontWeight: 'bold', paddingBottom: 20 },
   description: { fontSize: 15, fontStyle: 'italic' },
   statusActive: { color: 'green', paddingBottom: 10 },
   statusPending: { color: 'coral', paddingBottom: 10 },
-  users: { fontSize: 10 },
+  users: { fontSize: 10, fontStyle: 'italic' },
 });
