@@ -4,7 +4,7 @@ import React from 'react';
 export default function SettingsPage() {
   return (
     <View>
-      <Text>SettingsPage</Text>
+      <Text>Settings</Text>
     </View>
   );
 }
