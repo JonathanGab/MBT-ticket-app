@@ -19,7 +19,7 @@ export const useGetProject = (): IProject[] | null => {
   if (loading) {
     return null;
   } else if (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
   return data.getAllProjects;

@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
 
   const user: IUser | undefined | null = useGetCurrentUser(
-    valueAsyncStorage.userId as string
+    valueAsyncStorage.userId as any
   );
 
   const userProfile = {

@@ -13,8 +13,8 @@ import { LOGIN } from '../../hooks/mutations/useLogin';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
 import ProjectListPage from '../../screens/ProjectListPage';
-
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+
 interface IUser {
   email: string;
   hashedPassword: string;
@@ -41,7 +41,7 @@ export default function LoginForm() {
       });
       setUserId(logUser?.data?.login?.userId);
       setToken(logUser?.data?.login?.token);
-      navigation.navigate('List');
+      // navigation.navigate('List');
     } catch (err) {
       setValidation('⚠️ Email or password is incorrect, please try again.');
       console.error({ message: err });

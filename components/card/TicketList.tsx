@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, Text, SafeAreaView, FlatList } from 'react-native';
+import { gql, useQuery } from '@apollo/client';
 import { TicketItem } from '../item/TicketItem';
-import { useFilterTicket } from '../../hooks/query/useFilterTicket';
 import IFilter from '../Interface/IFilter';
 import ITicket from '../Interface/ITicket';
+import { useFilterTicket } from '../../hooks/query/useFilterTicket';
+import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
+import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
 import { stylesTicketList } from '../style';
 
 interface IProps {
@@ -11,11 +14,15 @@ interface IProps {
 }
 
 export default function TickerList({ filters }: IProps): JSX.Element {
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
+  const { getProjectId } = useContext(AuthContext) as IAuthContextProps;
+
   const tickets: ITicket[] | null = useFilterTicket(
-    filters.projectId,
-    filters.userId
+    filters.user,
+    filters.project as number
   );
 
+  // console.log('filter project', filters.project);
   const renderItem = ({ item }: { item: ITicket }) => (
     <TicketItem
       id={item.id}
@@ -25,6 +32,8 @@ export default function TickerList({ filters }: IProps): JSX.Element {
       status={item.status}
     />
   );
+
+  // console.log('Tickets', tickets);
 
   if (!tickets || tickets?.length < 1) {
     return <Text>No tickets :/</Text>;

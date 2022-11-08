@@ -15,7 +15,7 @@ export const useGetUsers = (): IUser[] | null => {
   if (loading) {
     return null;
   } else if (error) {
-    console.log(error);
+    console.error(error);
     return null;
   }
   return data.getAllUsers;

@@ -1,22 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
+import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
 
-const DropdownComponent = ({data , label , callback}: {data:any, label: string, callback:Function}) => {
-  const [value, setValue] = useState(null);
+const DropdownComponent = ({
+  data,
+  label,
+  callback,
+}: {
+  data: any;
+  label: string;
+  callback: Function;
+}) => {
+  const { getProjectId, setGetProjectId } = useContext(
+    AuthContext
+  ) as IAuthContextProps;
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
-    if (value || isFocus) {
+    if (getProjectId || isFocus) {
       return (
         <Text style={[styles.label, isFocus && { color: 'blue' }]}>
-          {'Select '+ label.toString()}
+          {'Select ' + label.toString()}
         </Text>
       );
     }
     return null;
   };
-
+  // console.log('getProjectId', getProjectId);
   return (
     <View style={styles.container}>
       {renderLabel()}
@@ -30,17 +41,19 @@ const DropdownComponent = ({data , label , callback}: {data:any, label: string, 
         maxHeight={300}
         labelField="title"
         valueField="id"
-        placeholder={!isFocus ? 'Select '+ label : '...'}
+        placeholder={!isFocus ? 'Select ' + label : '...'}
         searchPlaceholder="Search..."
         value={data}
-        onFocus={() => setIsFocus(true)}
+        onFocus={() => {
+          setIsFocus(true);
+        }}
         onBlur={() => setIsFocus(false)}
-        onChange={(item: { id: any; }) => {
-          setValue(item.id);
+        onChange={(item: { id: any }) => {
+          setGetProjectId(item.id);
+          console.log('item.id', item.id);
           setIsFocus(false);
           callback(item);
-        }
-      }
+        }}
       />
     </View>
   );

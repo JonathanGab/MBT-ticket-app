@@ -5,7 +5,7 @@ import { AuthContext, IAuthContextProps } from './AuthContext';
 
 export type AsyncStorageType = {
   token: string | null;
-  userId: string | null;
+  userId: number | null;
 };
 export interface ILoginContext {
   valueAsyncStorage: AsyncStorageType;
