@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   image_container: {
     position: 'relative',
-    height: '35%',
+    maxHeight: 250,
     width: '100%',
   },
   image: {
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   avatar: {
     zIndex: 3,
     width: '40%',
-    height: '53%',
+    height: '65%',
     borderRadius: 90,
   },
   autobiography: {

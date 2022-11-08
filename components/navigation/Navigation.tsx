@@ -38,8 +38,10 @@ export default function Navigation() {
               : 'information-circle-outline';
             size = 24;
           }
+
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+
         tabBarActiveTintColor: '#E29578',
         tabBarInactiveTintColor: '#ced4da',
       })}
@@ -51,11 +53,7 @@ export default function Navigation() {
         </Tab.Group>
       ) : (
         <Tab.Group>
-          <Tab.Screen
-            name="List"
-            component={ProjectListPage}
-            options={{ headerStyle: { backgroundColor: 'transparent' } }}
-          />
+          <Tab.Screen name="List" component={ProjectListPage} />
           <Tab.Screen name="Create" component={ProjectCreationPage} />
           <Tab.Screen name="About" component={AboutPage} />
         </Tab.Group>

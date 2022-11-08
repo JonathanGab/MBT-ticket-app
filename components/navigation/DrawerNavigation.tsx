@@ -59,8 +59,8 @@ export default function DrawerNavigation() {
     <Drawer.Navigator
       drawerContent={(props) => <DrawerItemProps {...props} />}
       screenOptions={{
-        // headerShown: false,
-        headerShown: true,
+        headerShown: false,
+        // headerShown: true,
       }}
     >
       <Drawer.Screen name="Home" component={Navigation} />

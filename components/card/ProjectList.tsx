@@ -2,6 +2,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 import IProject from '../../hooks/query/useGetProjectByCurrentUser';
+
 export default function ProjectList({
   title,
   description,
@@ -33,8 +34,16 @@ export default function ProjectList({
 }
 
 const styles = StyleSheet.create({
-  cardContainer: { borderWidth: 1, borderColor: 'grey' },
-  card: { width: '100%', paddingHorizontal: 10, paddingVertical: 10 },
+  cardContainer: { paddingHorizontal: 20, marginVertical: 10 },
+  card: {
+    backgroundColor: '#f5f5f7',
+    borderRadius: 20,
+    padding: 10,
+    shadowColor: '#171717',
+    shadowOffset: { width: 3, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+  },
   title: { fontSize: 25, fontWeight: 'bold', paddingBottom: 20 },
   description: { fontSize: 15, fontStyle: 'italic' },
   statusActive: { color: 'green', paddingBottom: 10 },

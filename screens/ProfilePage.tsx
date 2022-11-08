@@ -4,6 +4,7 @@ import ProfileCard from '../components/card/ProfileCard';
 import { useGetCurrentUser } from '../hooks/query/useGetUser';
 import IUser from '../hooks/query/useGetUser';
 import { ILoginContext, LoginContext } from '../contexts/LoginContext';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function ProfilePage() {
   const [name, setName] = useState('');
@@ -21,7 +22,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ProfileCard
         name={user?.name}
         autobiography={userProfile.autobiography}
@@ -32,7 +33,7 @@ export default function ProfilePage() {
         setHashedPassword={setHashedPassword}
         imageUrl={userProfile.profilePicture}
       />
-    </View>
+    </ScrollView>
   );
 }
 

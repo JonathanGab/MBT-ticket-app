@@ -1,14 +1,16 @@
 import { View, Text } from 'react-native';
 import { stylesTicketList } from '../components/style';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import IFilter from '../components/Interface/IFilter';
 import FilterItem from '../components/item/FilterItem';
 import TickerList from '../components/card/TicketList';
+import { LoginContext, ILoginContext } from '../contexts/LoginContext';
 
 export default function TicketPage() {
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
   const [filters, setFilters] = useState<IFilter>({
-    project: 1,
-    user: 1,
+    projectId: 1,
+    userId: Number(valueAsyncStorage.userId),
   });
 
   const handleFiltersValue = (newFilters: IFilter): void => {

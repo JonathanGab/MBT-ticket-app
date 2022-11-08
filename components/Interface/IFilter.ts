@@ -1,4 +1,4 @@
 export default interface IFilter {
-    project: number;
-    user: number;
-  }
+  projectId: number;
+  userId: number;
+}
