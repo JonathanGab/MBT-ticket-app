@@ -12,8 +12,9 @@ import SettingsPage from '../../screens/SettingsPage';
 import TicketPage from '../../screens/TicketPage';
 import TicketDetail from '../../screens/TicketDetail';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ILoginContext, LoginContext } from '../../contexts/LoginContext';
+import CreateTicket from '../../screens/CreateTicket';
+import TicketEditionPage from '../../screens/TicketEditionPage';
 
 const Drawer = createDrawerNavigator();
 
@@ -68,6 +69,8 @@ export default function DrawerNavigation() {
       <Drawer.Screen name="TaskDetail" component={TicketDetail} />
       <Drawer.Screen name="Ticket" component={TicketPage} />
       <Drawer.Screen name="Settings" component={SettingsPage} />
+      <Drawer.Screen name="Create Ticket" component={CreateTicket} />
+      <Drawer.Screen name="Edit Ticket" component={TicketEditionPage} />
     </Drawer.Navigator>
   );
 }

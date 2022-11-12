@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { View, Text, SafeAreaView, FlatList } from 'react-native';
 import { gql, useQuery } from '@apollo/client';
 import { TicketItem } from '../item/TicketItem';
@@ -8,21 +8,30 @@ import { useFilterTicket } from '../../hooks/query/useFilterTicket';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
 import { stylesTicketList } from '../style';
+import { useNavigation } from '@react-navigation/native';
+import { DrawerNavigationProp } from '@react-navigation/drawer';
 
 interface IProps {
   filters: IFilter;
 }
 
+type ListScreenProp = DrawerNavigationProp<
+  { 'Edit Ticket': undefined },
+  'Edit Ticket'
+>;
+
 export default function TickerList({ filters }: IProps): JSX.Element {
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
-  const { getProjectId } = useContext(AuthContext) as IAuthContextProps;
+  const { getProjectId, setGetTicketId, getTicketId } = useContext(
+    AuthContext
+  ) as IAuthContextProps;
+  const navigation = useNavigation<ListScreenProp>();
 
   const tickets: ITicket[] | null = useFilterTicket(
     filters.user,
     filters.project as number
   );
 
-  // console.log('filter project', filters.project);
   const renderItem = ({ item }: { item: ITicket }) => (
     <TicketItem
       id={item.id}
@@ -30,11 +39,16 @@ export default function TickerList({ filters }: IProps): JSX.Element {
       priority={item.priority}
       difficulty={item.difficulty}
       status={item.status}
+      description={item.description}
+      labels={item.labels}
+      estimatedTime={item.estimated_time}
+      users={item.Users}
+      getIdOnPress={() => {
+        setGetTicketId(item.id);
+        navigation.navigate('Edit Ticket');
+      }}
     />
   );
-
-  // console.log('Tickets', tickets);
-
   if (!tickets || tickets?.length < 1) {
     return <Text>No tickets :/</Text>;
   }

@@ -27,7 +27,6 @@ const DropdownComponent = ({
     }
     return null;
   };
-  // console.log('getProjectId', getProjectId);
   return (
     <View style={styles.container}>
       {renderLabel()}

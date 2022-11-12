@@ -1,7 +1,7 @@
 import { gql, useQuery } from '@apollo/client';
 
 export default interface IUser {
-  id?: number;
+  id?: number | string;
   name: string;
   email: string;
   hashedPassword: string;

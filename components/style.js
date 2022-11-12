@@ -69,6 +69,7 @@ export const stylesTicketDetail = StyleSheet.create({
 export const stylesTicketList = StyleSheet.create({
   container: {
     backgroundColor: '#ffffff',
+    height: '100%',
     padding: 16,
   },
   containerList: {
@@ -81,6 +82,11 @@ export const stylesTicketList = StyleSheet.create({
     color: '#000',
     fontWeight: 'bold',
   },
+  addTicket: {
+    position: 'absolute',
+    bottom: 90,
+    right: 30,
+  }
 });
 
 export const stylesTicketItem = StyleSheet.create({
@@ -90,15 +96,23 @@ export const stylesTicketItem = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
-    alignItems: 'center',
     shadowColor: '#171717',
     shadowOffset: { width: 3, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
+  edit:{
+    width:'100%',
+    flexDirection:'row',
+    justifyContent:'space-between',
+    alignItems:'center',
+  },
   containerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+  },
+  body:{
+    marginTop:10,
   },
   title: {
     fontSize: 32,
@@ -120,10 +134,12 @@ export const stylesTicketItem = StyleSheet.create({
     textAlign: 'center',
   },
   status: {
-    padding: 15,
+    padding: 5,
     marginVertical: 5,
-    width: 300,
+    width: 200,
     textAlign: 'center',
+
+    
   },
   button: {
     alignItems: 'center',
@@ -132,4 +148,10 @@ export const stylesTicketItem = StyleSheet.create({
     textAlign: 'center',
     padding: 10,
   },
+  showMore: {
+    alignItems: 'flex-end',
+  },
+  more:{
+    color:'#000',
+  }
 });

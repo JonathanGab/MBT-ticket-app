@@ -37,6 +37,5 @@ export const useFilterTicket = (
     console.error(error);
     return null;
   }
-  // console.log('getTicket', data?.getAllTicketFiltered);
   return data?.getAllTicketFiltered;
 };

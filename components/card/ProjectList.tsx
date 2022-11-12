@@ -23,7 +23,7 @@ export default function ProjectList({
         </Text>
         <Text>
           {Users?.map((user: any, index: any) => (
-            <Text key={user.id} style={styles.users}>
+            <Text key={index} style={styles.users}>
               {(index ? ', ' : '') + user.name}
             </Text>
           ))}
