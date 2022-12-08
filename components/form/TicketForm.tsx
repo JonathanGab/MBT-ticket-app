@@ -114,9 +114,11 @@ export default function TicketForm() {
         <View>
           <BtnSubmit
             isLoading={isLoading}
-            width="100%"
-            color="#E29578"
+            width="300"
+            backgroundColor="#E29578"
             onPress={(e: any) => submitNewTicket(e)}
+            text="Create"
+            height="35"
           />
         </View>
       </SafeAreaView>

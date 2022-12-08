@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Alert, Text, TouchableOpacity, View } from 'react-native';
+import { Text, View } from 'react-native';
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
@@ -10,11 +10,10 @@ import Navigation from './Navigation';
 import ProfilePage from '../../screens/ProfilePage';
 import SettingsPage from '../../screens/SettingsPage';
 import TicketPage from '../../screens/TicketPage';
-import TicketDetail from '../../screens/TicketDetail';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { ILoginContext, LoginContext } from '../../contexts/LoginContext';
 import CreateTicket from '../../screens/CreateTicket';
-import TicketEditionPage from '../../screens/TicketEditionPage';
+import Dashboard from '../dashboard/Dashboard';
 
 const Drawer = createDrawerNavigator();
 
@@ -35,7 +34,7 @@ function DrawerItemProps(props: any) {
               padding: 10,
             }}
           >
-            <Text style={{ color: 'white' }}>Exit</Text>
+            <Text style={{ color: 'white' }}>Logout</Text>
             <Ionicons
               color={'white'}
               size={20}
@@ -64,13 +63,12 @@ export default function DrawerNavigation() {
         // headerShown: true,
       }}
     >
-      <Drawer.Screen name="Home" component={Navigation} />
+      <Drawer.Screen name="Home" component={Dashboard} />
+      <Drawer.Screen name="Nav" component={Navigation} />
       <Drawer.Screen name="Profile" component={ProfilePage} />
-      <Drawer.Screen name="TaskDetail" component={TicketDetail} />
       <Drawer.Screen name="Ticket" component={TicketPage} />
       <Drawer.Screen name="Settings" component={SettingsPage} />
       <Drawer.Screen name="Create Ticket" component={CreateTicket} />
-      <Drawer.Screen name="Edit Ticket" component={TicketEditionPage} />
     </Drawer.Navigator>
   );
 }

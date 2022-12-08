@@ -10,24 +10,17 @@ import IUser from '../Interface/IUser';
 import DropdownComponent from './DropdownComponent';
 
 interface IProps {
-  // setFilterValue: Function;
-  setFilterValue: React.Dispatch<React.SetStateAction<IFilter>>;
+  setFilterValue: Function;
   actualValues: IFilter;
 }
 
-export default function FilterItem({
-  setFilterValue,
-  actualValues,
-}: IProps): JSX.Element {
+export default function FilterItem({ setFilterValue }: IProps): JSX.Element {
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
-  const { getProjectId } = useContext(AuthContext) as IAuthContextProps;
 
-  function setProject(projectId: number, userId: number): void {
+  function setProject(projectId: number): void {
     setFilterValue({
-      // project: 2,
-      project: projectId,
-      // user: 7,
-      user: userId,
+      project: Number(projectId),
+      user: Number(valueAsyncStorage.userId),
     });
   }
 

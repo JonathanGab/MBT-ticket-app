@@ -1,4 +1,10 @@
-import { View, SafeAreaView, StyleSheet } from 'react-native';
+import {
+  View,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext, IAuthContextProps } from '../contexts/AuthContext';
 import { useGetTicketById } from '../hooks/query/useGetTicketById';
@@ -14,6 +20,7 @@ import {
   Text,
   Radio,
   TextArea,
+  Button,
 } from 'native-base';
 import BtnSubmit from '../components/utils/BtnSubmit';
 import {
@@ -24,9 +31,13 @@ import {
 import { UPDATE_TICKET } from '../hooks/mutations/useUpdateTicket';
 import { useMutation } from '@apollo/client';
 import { useGetAllUsers } from '../hooks/query/useGetAllUsers';
-
+import Comment from '../components/Comment';
+import ModalButton from '../components/modal/ModalButton';
+import ModalView from '../components/modal/ModalView';
+import { LoginContext, ILoginContext } from '../contexts/LoginContext';
 export default function TicketEditionPage() {
   const { getTicketId } = useContext(AuthContext) as IAuthContextProps;
+  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
   const ticketId = useGetTicketById(getTicketId as number);
   const [updateTicket, { loading, error, data }] = useMutation(UPDATE_TICKET);
 
@@ -39,6 +50,8 @@ export default function TicketEditionPage() {
   const [difficulty, setDifficulty] = useState<number | null | undefined>(null);
   const [priority, setPriority] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
+
+  const [open, setOpen] = useState(false);
 
   const users = useGetAllUsers();
 
@@ -89,196 +102,211 @@ export default function TicketEditionPage() {
           difficulty: difficulty !== null ? difficulty : ticketId?.difficulty,
         },
       });
-      console.log('up', updatedTicket.data);
       return updatedTicket;
     } catch (err) {
-      console.error(err);
+      console.log(err);
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
-        <View>
-          <Center>
-            <Stack space={4} w="350px" my="10px">
-              <Input
-                variant="outline"
-                placeholder="Outline"
-                defaultValue={ticketId?.title}
-                backgroundColor="white"
-                onChangeText={(text) => setTitle(text)}
-              />
-            </Stack>
-            <Stack space={4} w="350px" my="10px">
-              <Input
-                variant="outline"
-                placeholder="Outline"
-                defaultValue={ticketId?.description}
-                backgroundColor="white"
-                onChangeText={(text) => setDescription(text)}
-              />
-            </Stack>
-            <FormControl>
-              <FormControl.Label>Status</FormControl.Label>
-              <Select
-                minWidth="200"
-                accessibilityLabel="Status"
-                placeholder="Status"
-                _selectedItem={{
-                  bg: 'teal.600',
-                  endIcon: <CheckIcon size={5} />,
-                }}
-                mt="1"
-                backgroundColor={'white'}
-                onValueChange={(v) => setStatus(v)}
-                selectedValue={status !== '' ? status : ticketId?.status}
-              >
-                {statusSample.map((item, index) => (
-                  <Select.Item
-                    key={index}
-                    label={item?.name}
-                    value={item?.name}
-                  >
-                    {item?.name}
-                  </Select.Item>
-                ))}
-              </Select>
-              <FormControl.Label>Label</FormControl.Label>
-              <Select
-                minWidth="200"
-                accessibilityLabel="Label"
-                placeholder="Label"
-                _selectedItem={{
-                  bg: 'teal.600',
-                  endIcon: <CheckIcon size={5} />,
-                }}
-                mt="1"
-                backgroundColor={'white'}
-                selectedValue={label !== '' ? label : ticketId?.labels}
-                onValueChange={(v) => setLabel(v)}
-              >
-                {labelSample.map((item, index) => (
-                  <Select.Item
-                    key={index}
-                    label={item?.name}
-                    value={item?.name}
-                  >
-                    {item?.name}
-                  </Select.Item>
-                ))}
-              </Select>
-              <FormControl.Label>Members</FormControl.Label>
-              <Select
-                minWidth="200"
-                accessibilityLabel="Members"
-                placeholder="Members"
-                _selectedItem={{
-                  bg: 'teal.600',
-                  endIcon: <CheckIcon size={5} />,
-                }}
-                mt="1"
-                backgroundColor={'white'}
-                onValueChange={(v) => setUser(v)}
-                selectedValue={user as any}
-              >
-                {users.map((item, index) => (
-                  <Select.Item
-                    key={index}
-                    label={item?.name}
-                    value={item?.id as string}
-                  >
-                    {item?.name}
-                  </Select.Item>
-                ))}
-              </Select>
-            </FormControl>
-            <Box alignItems="center" w="100%">
-              <Stack space={4} alignItems="center" w="75%" maxW="300">
-                <Text textAlign="center">{difficulty}</Text>
-                <Slider
-                  defaultValue={ticketId?.difficulty}
-                  colorScheme={ajustColor(difficulty)}
-                  step={1}
-                  onChange={(v) => setDifficulty(Math.floor(v))}
-                  maxValue={5}
-                >
-                  <Slider.Track>
-                    <Slider.FilledTrack />
-                  </Slider.Track>
-                  <Slider.Thumb />
-                </Slider>
-              </Stack>
-            </Box>
-            <Radio.Group
-              name="Priority"
-              defaultValue={ticketId?.priority}
-              accessibilityLabel="Pick a priority"
-              onChange={(nextValue) => setPriority(nextValue)}
-              value={priority}
-            >
-              <Stack
-                direction={{
-                  base: 'row',
-                  md: 'row',
-                }}
-                alignItems={{
-                  base: 'flex-start',
-                  md: 'center',
-                }}
-                space={4}
-                w="75%"
-                maxW="300px"
-                my={3}
-              >
-                {prioritySample.map((item, index) => (
-                  <Radio
-                    key={index}
-                    value={item?.name}
-                    colorScheme={item.color}
-                    size="sm"
-                    my={1}
-                  >
-                    {item.name}
-                  </Radio>
-                ))}
-              </Stack>
-            </Radio.Group>
-          </Center>
-        </View>
-        <View>
-          <BtnSubmit
-            isLoading={isLoading}
-            width={'100%'}
-            color={'#E29578'}
-            onPress={(e: any) => submitUpdatedTicket(e)}
-          />
-        </View>
-        <View>
+    <>
+      <View style={styles.container}>
+        <ScrollView>
           <View>
-            <Text>+ Add comment</Text>
-            <TextArea
-              autoCompleteType={'off'}
-              backgroundColor={'white'}
-              h={20}
-              placeholder="Text Area Placeholder"
-              w="75%"
-              maxW="300"
+            <View
+              style={{
+                width: '100%',
+              }}
+            >
+              <View
+                style={{
+                  width: '100%',
+                  alignItems: 'flex-end',
+                }}
+              >
+                <ModalButton open={open} setOpen={setOpen} length={'3'} />
+              </View>
+            </View>
+
+            <Center>
+              <Stack space={4} w="350px" my="10px">
+                <Input
+                  variant="outline"
+                  placeholder="Outline"
+                  defaultValue={ticketId?.title}
+                  backgroundColor="white"
+                  onChangeText={(text) => setTitle(text)}
+                />
+              </Stack>
+              <Stack space={4} w="350px" my="10px">
+                <Input
+                  variant="outline"
+                  placeholder="Outline"
+                  defaultValue={ticketId?.description}
+                  backgroundColor="white"
+                  onChangeText={(text) => setDescription(text)}
+                />
+              </Stack>
+              <FormControl>
+                <FormControl.Label>Status</FormControl.Label>
+                <Select
+                  minWidth="200"
+                  accessibilityLabel="Status"
+                  placeholder="Status"
+                  _selectedItem={{
+                    bg: 'teal.600',
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt="1"
+                  backgroundColor={'white'}
+                  onValueChange={(v) => setStatus(v)}
+                  selectedValue={status !== '' ? status : ticketId?.status}
+                >
+                  {statusSample.map((item, index) => (
+                    <Select.Item
+                      key={index}
+                      label={item?.name}
+                      value={item?.name}
+                    >
+                      {item?.name}
+                    </Select.Item>
+                  ))}
+                </Select>
+                <FormControl.Label>Label</FormControl.Label>
+                <Select
+                  minWidth="200"
+                  accessibilityLabel="Label"
+                  placeholder="Label"
+                  _selectedItem={{
+                    bg: 'teal.600',
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt="1"
+                  backgroundColor={'white'}
+                  selectedValue={label !== '' ? label : ticketId?.labels}
+                  onValueChange={(v) => setLabel(v)}
+                >
+                  {labelSample.map((item, index) => (
+                    <Select.Item
+                      key={index}
+                      label={item?.name}
+                      value={item?.name}
+                    >
+                      {item?.name}
+                    </Select.Item>
+                  ))}
+                </Select>
+                <FormControl.Label>Members</FormControl.Label>
+                <Select
+                  minWidth="200"
+                  accessibilityLabel="Members"
+                  placeholder="Members"
+                  _selectedItem={{
+                    bg: 'teal.600',
+                    endIcon: <CheckIcon size={5} />,
+                  }}
+                  mt="1"
+                  backgroundColor={'white'}
+                  onValueChange={(v) => setUser(v)}
+                  selectedValue={user as any}
+                >
+                  {users.map((item, index) => (
+                    <Select.Item
+                      key={index}
+                      label={item?.name}
+                      value={item?.id as string}
+                    >
+                      {item?.name}
+                    </Select.Item>
+                  ))}
+                </Select>
+              </FormControl>
+              <Box alignItems="center" w="100%" marginY="20px">
+                <Stack space={4} alignItems="center" w="75%" maxW="300">
+                  <Text textAlign="center" fontSize="20px">
+                    {difficulty}
+                  </Text>
+                  <Slider
+                    defaultValue={ticketId?.difficulty}
+                    colorScheme={ajustColor(difficulty)}
+                    step={1}
+                    onChange={(v) => setDifficulty(Math.floor(v))}
+                    maxValue={5}
+                  >
+                    <Slider.Track>
+                      <Slider.FilledTrack />
+                    </Slider.Track>
+                    <Slider.Thumb />
+                  </Slider>
+                </Stack>
+              </Box>
+              <Radio.Group
+                name="Priority"
+                defaultValue={ticketId?.priority}
+                accessibilityLabel="Pick a priority"
+                onChange={(nextValue) => setPriority(nextValue)}
+                value={priority}
+              >
+                <Stack
+                  direction={{
+                    base: 'row',
+                    md: 'row',
+                  }}
+                  alignItems={{
+                    base: 'flex-start',
+                    md: 'center',
+                  }}
+                  space={4}
+                  w="75%"
+                  // maxW="300px"
+                  my={3}
+                >
+                  {prioritySample.map((item, index) => (
+                    <Radio
+                      key={index}
+                      value={item?.name}
+                      colorScheme={item.color}
+                      size="sm"
+                      my={1}
+                    >
+                      {item.name}
+                    </Radio>
+                  ))}
+                </Stack>
+              </Radio.Group>
+            </Center>
+          </View>
+
+          <View>
+            <BtnSubmit
+              isLoading={isLoading}
+              width="100%"
+              backgroundColor="#E29578"
+              onPress={(e: any) => submitUpdatedTicket(e)}
+              text="Create"
+              height="35"
             />
           </View>
-        </View>
-      </SafeAreaView>
-    </View>
+        </ScrollView>
+      </View>
+      <ModalView
+        open={open}
+        setOpen={setOpen}
+        userId={valueAsyncStorage.userId}
+      />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     height: '100%',
+    paddingTop: 100,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingHorizontal: 20,
     backgroundColor: '#EDF6F9',
   },
 });

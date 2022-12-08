@@ -9,6 +9,7 @@ import { AuthContext, IAuthContextProps } from '../contexts/AuthContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+
 type ListScreenProp = DrawerNavigationProp<
   { 'Create Ticket': undefined },
   'Create Ticket'
@@ -17,6 +18,10 @@ type ListScreenProp = DrawerNavigationProp<
 export default function TicketPage() {
   const { getProjectId } = useContext(AuthContext) as IAuthContextProps;
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
+  // const [filters, setFilters] = useState<IFilter>({
+  //   project: Number(getProjectId),
+  //   user: Number(valueAsyncStorage.userId),
+  // });
   const [filters, setFilters] = useState<IFilter>({
     project: Number(getProjectId),
     user: Number(valueAsyncStorage.userId),
@@ -30,15 +35,7 @@ export default function TicketPage() {
   return (
     <View style={stylesTicketList.container}>
       <Text style={stylesTicketList.title}>Ticket List</Text>
-      <FilterItem
-        setFilterValue={() =>
-          setFilters({
-            project: Number(getProjectId),
-            user: Number(valueAsyncStorage.userId),
-          })
-        }
-        actualValues={filters}
-      />
+      <FilterItem setFilterValue={handleFiltersValue} actualValues={filters} />
       <TickerList filters={filters} />
       <View style={stylesTicketList.addTicket}>
         <Pressable onPress={() => navigation.navigate('Create Ticket')}>

@@ -61,7 +61,7 @@ export default function ProjectCreateForm(): JSX.Element {
       setDesc('');
     } catch (err) {
       setValidation('⚠️ Incomplete data, please try again.');
-      console.error({ message: err });
+      console.log({ message: err });
     }
   };
 

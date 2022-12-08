@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { createContext, useState, Dispatch, SetStateAction } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext, IAuthContextProps } from './AuthContext';
-
 export type AsyncStorageType = {
   token: string | null;
   userId?: number | null;
@@ -33,13 +32,17 @@ export default function LoginProvider({ children }: any) {
 
   useEffect(() => {
     if (token) {
-      storeData({ token: token, userId: userId });
+      storeData({
+        token: token,
+        userId: userId,
+      });
     }
   }, [token]);
 
   const getData = async () => {
     try {
       const getJson = await AsyncStorage.getItem('token');
+
       return getJson != null ? setValueAsyncStorage(JSON.parse(getJson)) : null;
     } catch (e) {
       console.error(e);

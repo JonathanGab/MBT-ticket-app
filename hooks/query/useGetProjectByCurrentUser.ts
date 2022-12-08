@@ -11,6 +11,8 @@ export default interface IProject {
   description: string;
   start_time: Date;
   end_time?: Date;
+  created_at?: Date;
+  updated_at?: Date;
   status: string;
   Users: IUsers[];
   Tickets?: [{ id: number }];
@@ -44,4 +46,41 @@ export const useGetProjectByCurrentUser = (id: number): IProject[] | null => {
     return null;
   }
   return data.getAllProjectsByCurrentUserId;
+};
+
+export const GET_ALL_PROJECTS_ORDER_BY_DATE_AND_CURRENT_USER_ID = gql`
+  query GetAllProjectsOrderByDateAndCurrentUserId(
+    $getAllProjectsOrderByDateAndCurrentUserIdId: ID
+  ) {
+    getAllProjectsOrderByDateAndCurrentUserId(
+      id: $getAllProjectsOrderByDateAndCurrentUserIdId
+    ) {
+      created_at
+      title
+      status
+      Users {
+        name
+      }
+    }
+  }
+`;
+
+export const useGetAllProjectsOrderByDateAndCurrentUserId = (
+  id: number
+): IProject[] | null => {
+  const { loading, error, data } = useQuery(
+    GET_ALL_PROJECTS_ORDER_BY_DATE_AND_CURRENT_USER_ID,
+    {
+      variables: {
+        getAllProjectsOrderByDateAndCurrentUserIdId: id,
+      },
+    }
+  );
+  if (loading) {
+    return null;
+  } else if (error) {
+    console.error(error);
+    return null;
+  }
+  return data?.getAllProjectsOrderByDateAndCurrentUserId;
 };

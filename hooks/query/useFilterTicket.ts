@@ -2,23 +2,23 @@ import { gql, useQuery } from '@apollo/client';
 import ITicket from '../../components/Interface/ITicket';
 
 export const GET_FILTERED_TICKETS = gql`
-query GetAllTicketFiltered($users: Int, $projectId: Int) {
-  getAllTicketFiltered(Users: $users, projectId: $projectId) {
-    title
-    status
-    Users {
-      name
+  query GetAllTicketFiltered($users: Int, $projectId: Int) {
+    getAllTicketFiltered(Users: $users, projectId: $projectId) {
+      title
+      status
+      Users {
+        name
+      }
+      description
+      difficulty
+      id
+      projectId
+      spent_time
+      priority
+      labels
+      estimated_time
     }
-    description
-    difficulty
-    id
-    projectId
-    spent_time
-    priority
-    labels
-    estimated_time
   }
-}
 `;
 
 export const useFilterTicket = (
@@ -28,8 +28,8 @@ export const useFilterTicket = (
   const { loading, error, data } = useQuery(GET_FILTERED_TICKETS, {
     variables: {
       users: users,
-      projectId: projectId
-    }
+      projectId: projectId,
+    },
   });
   if (loading) {
     return null;

@@ -12,9 +12,7 @@ const DropdownComponent = ({
   label: string;
   callback: Function;
 }) => {
-  const { getProjectId, setGetProjectId } = useContext(
-    AuthContext
-  ) as IAuthContextProps;
+  const { getProjectId } = useContext(AuthContext) as IAuthContextProps;
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
@@ -48,10 +46,8 @@ const DropdownComponent = ({
         }}
         onBlur={() => setIsFocus(false)}
         onChange={(item: { id: any }) => {
-          setGetProjectId(item.id);
-          console.log('item.id', item.id);
           setIsFocus(false);
-          callback(item);
+          callback(item.id);
         }}
       />
     </View>

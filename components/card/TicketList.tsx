@@ -1,11 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { View, Text, SafeAreaView, FlatList } from 'react-native';
-import { gql, useQuery } from '@apollo/client';
 import { TicketItem } from '../item/TicketItem';
 import IFilter from '../Interface/IFilter';
 import ITicket from '../Interface/ITicket';
 import { useFilterTicket } from '../../hooks/query/useFilterTicket';
-import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
 import { stylesTicketList } from '../style';
 import { useNavigation } from '@react-navigation/native';
@@ -21,10 +19,7 @@ type ListScreenProp = DrawerNavigationProp<
 >;
 
 export default function TickerList({ filters }: IProps): JSX.Element {
-  const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
-  const { getProjectId, setGetTicketId, getTicketId } = useContext(
-    AuthContext
-  ) as IAuthContextProps;
+  const { setGetTicketId } = useContext(AuthContext) as IAuthContextProps;
   const navigation = useNavigation<ListScreenProp>();
 
   const tickets: ITicket[] | null = useFilterTicket(

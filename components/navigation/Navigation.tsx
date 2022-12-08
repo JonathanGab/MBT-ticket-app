@@ -7,13 +7,13 @@ import AboutPage from '../../screens/AboutPage';
 import CreateAccountPage from '../../screens/CreateAccountPage';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
-import { AsyncStorageType } from '../../contexts/LoginContext';
+import { createStackNavigator } from '@react-navigation/stack';
+import TicketEditionPage from '../../screens/TicketEditionPage';
 
 const Tab = createBottomTabNavigator();
-
-export default function Navigation() {
+const RootStack = createStackNavigator();
+function Navigation() {
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
-  // kill async on logout
 
   return (
     <Tab.Navigator
@@ -59,5 +59,18 @@ export default function Navigation() {
         </Tab.Group>
       )}
     </Tab.Navigator>
+  );
+}
+
+export default function AppNav() {
+  return (
+    <RootStack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <RootStack.Screen name="MainTabs" component={Navigation} />
+      <RootStack.Screen name="Edit Ticket" component={TicketEditionPage} />
+    </RootStack.Navigator>
   );
 }

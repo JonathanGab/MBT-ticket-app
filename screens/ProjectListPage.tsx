@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet, FlatList } from 'react-native';
 import React, { useContext } from 'react';
 import ProjectList from '../components/card/ProjectList';
 import IProject, {

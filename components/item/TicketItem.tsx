@@ -23,6 +23,18 @@ type UserType = {
   name: string;
 };
 
+export const changeBgColor = (status: string) => {
+  switch (status) {
+    case 'OPEN':
+      return '#68d89b';
+    case 'IN_PROGRESS':
+      return '#fde74c';
+    case 'CLOSE':
+      return '#e55934';
+    default:
+      return '#ffffff';
+  }
+};
 export const TicketItem = ({
   id,
   title,
@@ -36,19 +48,6 @@ export const TicketItem = ({
   getIdOnPress,
 }: ITicketItemProps) => {
   const [isMore, setIsMore] = useState(false);
-
-  const changeBgColor = (status: string) => {
-    switch (status) {
-      case 'OPEN':
-        return '#68d89b';
-      case 'IN_PROGRESS':
-        return '#fde74c';
-      case 'CLOSE':
-        return '#e55934';
-      default:
-        return '#ffffff';
-    }
-  };
 
   return (
     <View style={stylesTicketItem.item}>
