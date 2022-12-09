@@ -65,3 +65,40 @@ export const useGetAllTicketsOrderByDateAndCurrentUserId = (
   }
   return data?.getAllTicketsOrderByDateAndCurrentUserId;
 };
+
+export const GET_LAST_COMPLETED_TICKETS_BY_CURRENT_USER_ID = gql`
+  query GetLastCompletedTicketsByCurrentUserId(
+    $getLastCompletedTicketsByCurrentUserIdId: ID
+  ) {
+    getLastCompletedTicketsByCurrentUserId(
+      id: $getLastCompletedTicketsByCurrentUserIdId
+    ) {
+      created_at
+      title
+      status
+      Users {
+        name
+      }
+    }
+  }
+`;
+
+export const useGetLastCompletedTicketsByCurrentUserId = (
+  id: number
+): ITicket[] | null => {
+  const { loading, error, data } = useQuery(
+    GET_LAST_COMPLETED_TICKETS_BY_CURRENT_USER_ID,
+    {
+      variables: {
+        getLastCompletedTicketsByCurrentUserIdId: id,
+      },
+    }
+  );
+  if (loading) {
+    return null;
+  } else if (error) {
+    console.error(error);
+    return null;
+  }
+  return data?.getLastCompletedTicketsByCurrentUserId;
+};

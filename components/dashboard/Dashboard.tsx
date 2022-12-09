@@ -4,51 +4,77 @@ import DashboardIcon from './DashboardIcon';
 import { ILoginContext, LoginContext } from '../../contexts/LoginContext';
 import ITicket from '../../components/Interface/ITicket';
 import { Foundation } from '@expo/vector-icons';
-import { Octicons } from '@expo/vector-icons';
-import DashboardRow from './DashboardRow';
-import DividerComponent from '../utils/inputs/Divider';
 import IProject, {
   useGetProjectByCurrentUser,
   useGetAllProjectsOrderByDateAndCurrentUserId,
+  useGetAllProjectsCompletedByCurrentUserId,
+  useGetLastCompletedProjectsByCurrentUserId,
 } from '../../hooks/query/useGetProjectByCurrentUser';
 import {
   useGetAllTicketsByCurrentUserId,
   useGetAllTicketsOrderByDateAndCurrentUserId,
+  useGetLastCompletedTicketsByCurrentUserId,
 } from '../../hooks/query/useGetAllTicketsByCurrentUserId';
-import * as dateFns from 'date-fns';
-
+import { MaterialIcons } from '@expo/vector-icons';
 import IUser, { useGetCurrentUser } from '../../hooks/query/useGetUser';
-import { changeBgColor } from '../item/TicketItem';
+import { Entypo } from '@expo/vector-icons';
+import DashboardCard from './DashboardCard';
+import DashboardChart from './DashboardChart';
 
 export default function Dashboard() {
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
 
+  //* ------------------ GET ALL DATA ------------------ //
+  //* QUERY FOR PROJECTS
   const projectByUserId: IProject[] | undefined | null =
     useGetProjectByCurrentUser(Number(valueAsyncStorage.userId));
-
-  const ticketByUserId: ITicket[] | undefined | null =
-    useGetAllTicketsByCurrentUserId(Number(valueAsyncStorage.userId));
-
-  const ticketOrderByDate: ITicket[] | undefined | null =
-    useGetAllTicketsOrderByDateAndCurrentUserId(
-      Number(valueAsyncStorage.userId)
-    );
-
   const projectOrderByDate: IProject[] | undefined | null =
     useGetAllProjectsOrderByDateAndCurrentUserId(
       Number(valueAsyncStorage.userId)
     );
-
+  const lastProjectOrderByDate: IProject[] | undefined | null =
+    useGetLastCompletedProjectsByCurrentUserId(
+      Number(valueAsyncStorage.userId)
+    );
+  const projectCompleted: IProject[] | undefined | null =
+    useGetAllProjectsCompletedByCurrentUserId(valueAsyncStorage.userId as any);
+  //* QUERY FOR TICKETS
+  const ticketByUserId: ITicket[] | undefined | null =
+    useGetAllTicketsByCurrentUserId(Number(valueAsyncStorage.userId));
+  const ticketOrderByDate: ITicket[] | undefined | null =
+    useGetAllTicketsOrderByDateAndCurrentUserId(
+      Number(valueAsyncStorage.userId)
+    );
+  const lastTicketOrderByDate: ITicket[] | undefined | null =
+    useGetLastCompletedTicketsByCurrentUserId(Number(valueAsyncStorage.userId));
+  //* QUERY FOR USER
   const user: IUser | undefined | null = useGetCurrentUser(
     valueAsyncStorage.userId as any
   );
+  //* ------------------ FEATURES ------------------ //
 
-  const calculateNumberOfItems = (data: IProject[] | ITicket[]): number => {
+  function calculateNumberOfItems(data: IProject[] | ITicket[]): number {
     if (data) {
       return data.length;
     }
     return 0;
-  };
+  }
+
+  function chooseRandomColor(): string {
+    const arrayColor = [
+      '#b8f2e6',
+      '#aed9e0',
+      '#dec5e3',
+      '#ffc8dd',
+      '#B6DCFE',
+      '#A9F8FB',
+      '#69EBD0',
+      '#DBFEB8',
+    ];
+    const randomColor =
+      arrayColor[Math.floor(Math.random() * arrayColor.length)];
+    return randomColor;
+  }
 
   return (
     <View style={styles.container}>
@@ -59,81 +85,63 @@ export default function Dashboard() {
         <View style={styles.dashCard}>
           <ScrollView horizontal={true}>
             <DashboardIcon
-              icon={<Octicons name="project" size={40} />}
-              color="#b8f2e6"
-              text="Projects"
+              icon={<MaterialIcons name="work-outline" size={40} />}
+              color={chooseRandomColor()}
+              text={
+                (projectByUserId?.length as number) > 1 ? 'projects' : 'project'
+              }
               number={calculateNumberOfItems(projectByUserId as IProject[])}
             />
             <DashboardIcon
               icon={<Foundation name="ticket" size={40} />}
-              color="#aed9e0"
-              text="Tickets"
+              color={chooseRandomColor()}
+              text={
+                (ticketByUserId?.length as number) > 1
+                  ? 'assigned tickets'
+                  : 'assigned ticket'
+              }
+              number={calculateNumberOfItems(ticketByUserId as ITicket[])}
+            />
+            <DashboardIcon
+              icon={<MaterialIcons name="work-off" size={40} />}
+              color={chooseRandomColor()}
+              text={
+                (projectCompleted?.length as number) > 1
+                  ? 'projects completed'
+                  : 'project completed'
+              }
+              number={calculateNumberOfItems(projectCompleted as IProject[])}
+            />
+            <DashboardIcon
+              icon={<Entypo name="ticket" size={40} />}
+              color={chooseRandomColor()}
+              text={
+                (ticketByUserId?.length as number) > 1
+                  ? 'tickets completed'
+                  : 'ticket completed'
+              }
               number={calculateNumberOfItems(ticketByUserId as ITicket[])}
             />
           </ScrollView>
         </View>
-        <DividerComponent orientation="horizontal" color="lightgrey" mt="3" />
-        <View
-          style={{
-            backgroundColor: '#fbfbfb',
-            borderRadius: 5,
-            paddingTop: 10,
-            marginVertical: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              paddingBottom: 10,
-              marginLeft: 5,
-              fontStyle: 'italic',
-            }}
-          >
-            Last created tickets
-          </Text>
-          {ticketOrderByDate &&
-            ticketOrderByDate.map((ticket, index) => (
-              <DashboardRow
-                key={index}
-                date={dateFns.format(new Date(ticket.created_at), 'dd/MM/yy')}
-                status={ticket.status.replace(/_/g, ' ')}
-                task={ticket.title}
-                fill={changeBgColor(ticket.status)}
-              />
-            ))}
-        </View>
-        <DividerComponent orientation="horizontal" color="lightgrey" mt="0" />
-        <View
-          style={{
-            backgroundColor: '#fbfbfb',
-            borderRadius: 5,
-            paddingTop: 10,
-            marginVertical: 10,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 20,
-              paddingBottom: 10,
-              marginLeft: 5,
-              fontStyle: 'italic',
-            }}
-          >
-            Last created projects
-          </Text>
-          {projectOrderByDate &&
-            projectOrderByDate.map((project, index) => (
-              <DashboardRow
-                key={index}
-                date={dateFns.format(
-                  new Date(project.created_at as Date),
-                  'dd/MM/yy'
-                )}
-                status={project.status.toUpperCase()}
-                task={project.title}
-              />
-            ))}
-        </View>
+
+        <DashboardCard
+          section="Last created projects"
+          data={projectOrderByDate as IProject[]}
+        />
+        <DashboardCard
+          section="Last created tickets"
+          data={ticketOrderByDate as ITicket[]}
+        />
+        <DashboardCard
+          section="Last completed projects"
+          data={lastProjectOrderByDate as IProject[]}
+        />
+        <DashboardCard
+          section="Last completed tickets"
+          data={lastTicketOrderByDate as ITicket[]}
+        />
+        <DashboardChart />
       </ScrollView>
     </View>
   );

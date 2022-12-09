@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
-import DividerComponent from '../utils/inputs/Divider';
 
 type CardType = {
   icon: JSX.Element;
@@ -8,54 +7,54 @@ type CardType = {
   number: number;
   color?: string;
 };
-
 export default function DashboardIcon({
   icon,
   text,
   color,
   number = 10,
 }: CardType) {
+  const styles = StyleSheet.create({
+    icon: {
+      backgroundColor: color,
+      height: 110,
+      width: 105,
+      borderRadius: 10,
+      marginHorizontal: 10,
+    },
+    iconContainer: {
+      paddingHorizontal: 10,
+    },
+    iconBorder: {
+      alignItems: 'flex-start',
+      justifyContent: 'center',
+      height: 50,
+      borderRadius: 10,
+    },
+    iconContentContainer: {
+      fontSize: 10,
+      maxWidth: '100%',
+      maxHeight: '100%',
+    },
+    iconContent: {
+      height: 50,
+      justifyContent: 'center',
+    },
+    textAlign: {
+      textAlign: 'center',
+    },
+  });
+
   return (
-    <View
-      style={{
-        backgroundColor: color,
-        height: 100,
-        width: 98,
-        borderRadius: 10,
-        marginHorizontal: 10,
-      }}
-    >
+    <View style={styles.icon}>
       <View style={styles.iconContainer}>
-        <View>
-          <View style={styles.contentContainer}>
-            <View style={styles.iconBorder}>{icon}</View>
-            <View>
-              <Text style={styles.textAlign}>{number}</Text>
-              <Text style={styles.textAlign}>{text}</Text>
-            </View>
+        <View style={styles.iconContentContainer}>
+          <View style={styles.iconBorder}>{icon}</View>
+          <View style={styles.iconContent}>
+            <Text style={styles.textAlign}>{number}</Text>
+            <Text style={styles.textAlign}>{text}</Text>
           </View>
         </View>
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  iconContainer: {
-    padding: 3,
-  },
-  iconBorder: {
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    height: 60,
-    borderRadius: 10,
-  },
-  contentContainer: {
-    fontSize: 10,
-    maxWidth: '100%',
-    maxHeight: '100%',
-  },
-  textAlign: {
-    textAlign: 'center',
-  },
-});

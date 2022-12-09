@@ -84,3 +84,73 @@ export const useGetAllProjectsOrderByDateAndCurrentUserId = (
   }
   return data?.getAllProjectsOrderByDateAndCurrentUserId;
 };
+
+export const GET_ALL_COMPLETED_PROJECTS_BY_CURRENT_USER_ID = gql`
+  query GetAllProjectsCompletedByCurrentUserId(
+    $getAllProjectsCompletedByCurrentUserIdId: ID
+  ) {
+    getAllProjectsCompletedByCurrentUserId(
+      id: $getAllProjectsCompletedByCurrentUserIdId
+    ) {
+      status
+      title
+    }
+  }
+`;
+
+export const useGetAllProjectsCompletedByCurrentUserId = (
+  id: number
+): IProject[] | null => {
+  const { loading, error, data } = useQuery(
+    GET_ALL_COMPLETED_PROJECTS_BY_CURRENT_USER_ID,
+    {
+      variables: {
+        getAllProjectsCompletedByCurrentUserIdId: id,
+      },
+    }
+  );
+  if (loading) {
+    return null;
+  } else if (error) {
+    console.error(error);
+    return null;
+  }
+  return data?.getAllProjectsCompletedByCurrentUserId;
+};
+
+export const GET_LAST_COMPLETED_PROJECTS_BY_CURRENT_USER_ID = gql`
+  query GetLastCompletedProjectsByCurrentUserId(
+    $getLastCompletedProjectsByCurrentUserIdId: ID
+  ) {
+    getLastCompletedProjectsByCurrentUserId(
+      id: $getLastCompletedProjectsByCurrentUserIdId
+    ) {
+      created_at
+      title
+      status
+      Users {
+        name
+      }
+    }
+  }
+`;
+
+export const useGetLastCompletedProjectsByCurrentUserId = (
+  id: number
+): IProject[] | null => {
+  const { loading, error, data } = useQuery(
+    GET_LAST_COMPLETED_PROJECTS_BY_CURRENT_USER_ID,
+    {
+      variables: {
+        getLastCompletedProjectsByCurrentUserIdId: id,
+      },
+    }
+  );
+  if (loading) {
+    return null;
+  } else if (error) {
+    console.error(error);
+    return null;
+  }
+  return data?.getLastCompletedProjectsByCurrentUserId;
+};

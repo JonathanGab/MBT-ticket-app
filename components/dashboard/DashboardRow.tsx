@@ -6,6 +6,7 @@ type DashboardRowType = {
   task: string;
   status: string;
   fill?: string;
+  backgroundColor?: string;
 };
 
 export default function DashboardRow({
