@@ -3,7 +3,7 @@ import { Badge, VStack, Box } from 'native-base';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { TouchableOpacity } from 'react-native';
 
-function BadgeComment({ length }: any) {
+function BadgeComment({ length }: { length: number }) {
   return (
     <Box alignItems="flex-end" zIndex={2}>
       <VStack>
@@ -26,10 +26,13 @@ function BadgeComment({ length }: any) {
   );
 }
 
-export default function ModalButton({ open, setOpen, length }: any) {
-  const handleSizeClick = (size: string) => {
-    console.log(size);
-  };
+export default function ModalButton({
+  setOpen,
+  length,
+}: {
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  length: number;
+}) {
   return (
     <TouchableOpacity
       style={{

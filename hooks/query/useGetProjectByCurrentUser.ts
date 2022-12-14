@@ -15,7 +15,7 @@ export default interface IProject {
   updated_at?: Date;
   status: string;
   Users: IUsers[];
-  Tickets?: [{ id: number }];
+  Tickets?: [{ id: number; title: string }];
   picture_id?: number;
 }
 
@@ -31,21 +31,30 @@ export const GET_PROJECT_BY_CURRENT_USER = gql`
       description
       status
       start_time
+      Tickets {
+        id
+        title
+      }
     }
   }
 `;
 
 export const useGetProjectByCurrentUser = (id: number): IProject[] | null => {
-  const { loading, error, data } = useQuery(GET_PROJECT_BY_CURRENT_USER, {
-    variables: { getAllProjectsByCurrentUserIdId: id },
-  });
+  const { loading, error, data, refetch } = useQuery(
+    GET_PROJECT_BY_CURRENT_USER,
+    {
+      variables: { getAllProjectsByCurrentUserIdId: id },
+    }
+  );
+  refetch();
   if (loading) {
     return null;
-  } else if (error) {
+  }
+  if (error) {
     console.error(error);
     return null;
   }
-  return data.getAllProjectsByCurrentUserId;
+  return data?.getAllProjectsByCurrentUserId;
 };
 
 export const GET_ALL_PROJECTS_ORDER_BY_DATE_AND_CURRENT_USER_ID = gql`
@@ -68,7 +77,7 @@ export const GET_ALL_PROJECTS_ORDER_BY_DATE_AND_CURRENT_USER_ID = gql`
 export const useGetAllProjectsOrderByDateAndCurrentUserId = (
   id: number
 ): IProject[] | null => {
-  const { loading, error, data } = useQuery(
+  const { loading, error, data, refetch } = useQuery(
     GET_ALL_PROJECTS_ORDER_BY_DATE_AND_CURRENT_USER_ID,
     {
       variables: {
@@ -76,6 +85,7 @@ export const useGetAllProjectsOrderByDateAndCurrentUserId = (
       },
     }
   );
+  refetch();
   if (loading) {
     return null;
   } else if (error) {

@@ -22,7 +22,9 @@ export default function LoginForm() {
     hashedPassword: '',
   });
   const [validation, setValidation] = useState('');
-  const { setUserId, setToken } = useContext(AuthContext) as IAuthContextProps;
+  const { setUserId, setToken, setUsername } = useContext(
+    AuthContext
+  ) as IAuthContextProps;
   const [loginUser, { data, error }] = useMutation(LOGIN);
   const navigation = useNavigation<ListScreenProp>();
   const [show, setShow] = useState(false);
@@ -43,11 +45,12 @@ export default function LoginForm() {
       setUserId(userData?.data?.login?.userId);
       // store token in Session Storage
       setToken(userData?.data?.login?.token);
+      setUsername(userData?.data?.login?.name);
     } catch (err) {
       // display error message in front-end
       setValidation('⚠️ Email or password is incorrect, please try again.');
       // display error message in console
-      console.log({ message: err });
+      console.error({ message: err });
     }
   };
 

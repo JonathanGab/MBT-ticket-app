@@ -1,36 +1,75 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
+import { VictoryLabel, VictoryPie } from 'victory-native';
+import IProject from '../../hooks/query/useGetProjectByCurrentUser';
+import ArrowPressable from './ArrowPressable';
 
-export default function DashboardChart() {
-  const data = {
-    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    datasets: [
-      {
-        label: '# of Votes',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-        ],
-        borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-        ],
-        borderWidth: 1,
-      },
-    ],
-  };
+export default function DashboardChart({
+  arrayOfData,
+  section,
+}: {
+  arrayOfData: IProject[] | undefined | null;
+  section: string;
+}) {
+  const [show, setShow] = React.useState(true);
+  const data = arrayOfData?.map((item: any) => {
+    return {
+      projectName: item?.title,
+      NumberOfTickets: item.Tickets?.length,
+    };
+  });
+
   return (
-    <View>
-      <Text>Chart</Text>
+    <View style={styles.container}>
+      <View style={styles.containerDirection}>
+        <Text style={styles.section}>{section}</Text>
+        <ArrowPressable show={show} setShow={setShow} />
+      </View>
+      {show && (
+        <VictoryPie
+          data={data}
+          x="projectName"
+          y="NumberOfTickets"
+          colorScale={['#f44336', '#e91e63', '#9c27b0']}
+          width={450}
+          style={{
+            data: {
+              fillOpacity: 0.9,
+              stroke: '#fff',
+            },
+            labels: {
+              fontSize: 10,
+              fill: 'black',
+            },
+          }}
+          labelComponent={
+            <VictoryLabel textAnchor="middle" labelPlacement="parallel" />
+          }
+        />
+      )}
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fbfbfb',
+    marginTop: 10,
+    marginVertical: 10,
+    borderRadius: 5,
+  },
+  containerDirection: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  section: {
+    fontSize: 20,
+    paddingBottom: 10,
+    paddingLeft: 10,
+    fontStyle: 'italic',
+  },
+});

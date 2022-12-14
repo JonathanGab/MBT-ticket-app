@@ -63,12 +63,10 @@ export default function DrawerNavigation() {
         // headerShown: true,
       }}
     >
-      <Drawer.Screen name="Home" component={Dashboard} />
-      <Drawer.Screen name="Nav" component={Navigation} />
+      <Drawer.Screen name="Dashboard" component={Dashboard} />
+      <Drawer.Screen name="Project List" component={Navigation} />
       <Drawer.Screen name="Profile" component={ProfilePage} />
-      <Drawer.Screen name="Ticket" component={TicketPage} />
       <Drawer.Screen name="Settings" component={SettingsPage} />
-      <Drawer.Screen name="Create Ticket" component={CreateTicket} />
     </Drawer.Navigator>
   );
 }

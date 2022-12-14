@@ -25,12 +25,13 @@ export const useFilterTicket = (
   users: number,
   projectId: number
 ): ITicket[] | null => {
-  const { loading, error, data } = useQuery(GET_FILTERED_TICKETS, {
+  const { loading, error, data, refetch } = useQuery(GET_FILTERED_TICKETS, {
     variables: {
       users: users,
       projectId: projectId,
     },
   });
+  refetch();
   if (loading) {
     return null;
   } else if (error) {

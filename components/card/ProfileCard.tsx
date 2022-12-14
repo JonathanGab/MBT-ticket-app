@@ -44,7 +44,7 @@ export default function ProfileCard(props: IProfileProps) {
         },
       });
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
 

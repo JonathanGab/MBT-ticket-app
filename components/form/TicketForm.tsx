@@ -17,6 +17,12 @@ export const statusSample = [
   { id: 3, name: 'CLOSE' },
 ];
 
+export const statusProjectSample = [
+  { id: 1, name: 'OPEN' },
+  { id: 2, name: 'PENDING' },
+  { id: 3, name: 'CLOSE' },
+];
+
 export const labelSample = [
   { id: 1, name: 'Front-End' },
   { id: 2, name: 'Back-End' },

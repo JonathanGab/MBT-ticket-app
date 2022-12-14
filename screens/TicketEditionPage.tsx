@@ -104,7 +104,7 @@ export default function TicketEditionPage() {
       });
       return updatedTicket;
     } catch (err) {
-      console.log(err);
+      console.error(err);
     } finally {
       setIsLoading(false);
     }
@@ -126,7 +126,7 @@ export default function TicketEditionPage() {
                   alignItems: 'flex-end',
                 }}
               >
-                <ModalButton open={open} setOpen={setOpen} length={'3'} />
+                <ModalButton setOpen={setOpen} length={3} />
               </View>
             </View>
 

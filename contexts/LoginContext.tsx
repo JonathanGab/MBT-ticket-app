@@ -2,9 +2,12 @@ import React, { useContext, useEffect } from 'react';
 import { createContext, useState, Dispatch, SetStateAction } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext, IAuthContextProps } from './AuthContext';
+
 export type AsyncStorageType = {
   token: string | null;
   userId?: number | null;
+  name?: string | null;
+  roles?: string | null;
 };
 export interface ILoginContext {
   valueAsyncStorage: AsyncStorageType;
@@ -18,8 +21,11 @@ export default function LoginProvider({ children }: any) {
   const [valueAsyncStorage, setValueAsyncStorage] = useState<AsyncStorageType>({
     token: null,
     userId: null,
+    name: null,
   });
-  const { token, userId } = useContext(AuthContext) as IAuthContextProps;
+  const { token, userId, username, roles } = useContext(
+    AuthContext
+  ) as IAuthContextProps;
 
   const storeData = async (value: object) => {
     try {
@@ -35,6 +41,7 @@ export default function LoginProvider({ children }: any) {
       storeData({
         token: token,
         userId: userId,
+        name: username,
       });
     }
   }, [token]);

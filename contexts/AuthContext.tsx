@@ -4,6 +4,8 @@ export interface IAuthContextProps {
   token: string;
   userId: string;
   roles: string;
+  username: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
   setToken: React.Dispatch<React.SetStateAction<string>>;
   setUserId: React.Dispatch<React.SetStateAction<string>>;
   setRoles: React.Dispatch<React.SetStateAction<string>>;
@@ -19,6 +21,7 @@ export default function AuthProvider({ children }: any) {
   const [roles, setRoles] = useState('');
   const [getProjectId, setGetProjectId] = useState<null | number>(null);
   const [getTicketId, setGetTicketId] = useState<null | number>(null);
+  const [username, setUsername] = useState('');
 
   return (
     <AuthContext.Provider
@@ -33,6 +36,8 @@ export default function AuthProvider({ children }: any) {
         setGetProjectId,
         getTicketId,
         setGetTicketId,
+        username,
+        setUsername,
       }}
     >
       {children}

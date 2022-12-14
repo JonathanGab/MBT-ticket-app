@@ -56,5 +56,5 @@ export default function DashboardIcon({
         </View>
       </View>
     </View>
-  );
+  );  
 }

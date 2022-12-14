@@ -40,9 +40,10 @@ export const GET_CURRENT_USER = gql`
 `;
 
 export const useGetCurrentUser = (id: String): IUser | null => {
-  const { loading, error, data } = useQuery(GET_CURRENT_USER, {
+  const { loading, error, data, refetch } = useQuery(GET_CURRENT_USER, {
     variables: { getUserByIdId: id },
   });
+  refetch();
   if (loading) {
     return null;
   } else if (error) {

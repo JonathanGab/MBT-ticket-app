@@ -20,6 +20,22 @@ import IUser, { useGetCurrentUser } from '../../hooks/query/useGetUser';
 import { Entypo } from '@expo/vector-icons';
 import DashboardCard from './DashboardCard';
 import DashboardChart from './DashboardChart';
+import DividerComponent from '../utils/inputs/Divider';
+
+export function chooseRandomColor(): string {
+  const arrayColor = [
+    '#b8f2e6',
+    '#aed9e0',
+    '#dec5e3',
+    '#FFC8DD',
+    '#B6DCFE',
+    '#A9F8FB',
+    '#69EBD0',
+    '#DBFEB8',
+  ];
+  const randomColor = arrayColor[Math.floor(Math.random() * arrayColor.length)];
+  return randomColor;
+}
 
 export default function Dashboard() {
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
@@ -58,22 +74,6 @@ export default function Dashboard() {
       return data.length;
     }
     return 0;
-  }
-
-  function chooseRandomColor(): string {
-    const arrayColor = [
-      '#b8f2e6',
-      '#aed9e0',
-      '#dec5e3',
-      '#ffc8dd',
-      '#B6DCFE',
-      '#A9F8FB',
-      '#69EBD0',
-      '#DBFEB8',
-    ];
-    const randomColor =
-      arrayColor[Math.floor(Math.random() * arrayColor.length)];
-    return randomColor;
   }
 
   return (
@@ -124,7 +124,11 @@ export default function Dashboard() {
             />
           </ScrollView>
         </View>
-
+        <DividerComponent orientation="horizontal" color="lightgrey" mt="3" />
+        <DashboardChart
+          arrayOfData={projectByUserId as IProject[]}
+          section="Pecan Pie 📈"
+        />
         <DashboardCard
           section="Last created projects"
           data={projectOrderByDate as IProject[]}
@@ -141,7 +145,6 @@ export default function Dashboard() {
           section="Last completed tickets"
           data={lastTicketOrderByDate as ITicket[]}
         />
-        <DashboardChart />
       </ScrollView>
     </View>
   );

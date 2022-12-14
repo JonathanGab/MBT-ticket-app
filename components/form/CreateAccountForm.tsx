@@ -31,7 +31,7 @@ export default function CreateAccountForm() {
         setMessage('A mail has been sent to you to confirm your account.');
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   };
   return (

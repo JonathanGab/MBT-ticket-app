@@ -28,6 +28,8 @@ export const changeBgColor = (status: string) => {
     case 'OPEN':
       return '#68d89b';
     case 'IN_PROGRESS':
+      return '#ff9b42';
+    case 'PENDING':
       return '#fde74c';
     case 'CLOSE':
       return '#e55934';

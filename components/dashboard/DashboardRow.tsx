@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import React from 'react';
 
 type DashboardRowType = {
@@ -15,44 +15,44 @@ export default function DashboardRow({
   status,
   fill,
 }: DashboardRowType) {
+  const styles = StyleSheet.create({
+    container: {
+      flexDirection: 'row',
+      paddingVertical: 10,
+      paddingHorizontal: 5,
+    },
+    rowText: {
+      flex: 1,
+      alignItems: 'flex-start',
+      paddingVertical: 3,
+      paddingLeft: 5,
+      borderRadius: 5,
+    },
+    rowTask: {
+      flex: 2,
+      alignItems: 'flex-start',
+      paddingVertical: 3,
+      paddingLeft: 5,
+      borderRadius: 5,
+    },
+    rowFill: {
+      flex: 1.5,
+      alignItems: 'center',
+      backgroundColor: fill,
+      paddingVertical: 3,
+      borderRadius: 5,
+    },
+  });
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        paddingVertical: 10,
-        paddingHorizontal: 5,
-      }}
-    >
-      <View
-        style={{
-          flex: 0.6,
-          alignItems: 'center',
-          paddingVertical: 3,
-          borderRadius: 5,
-        }}
-      >
+    <View style={styles.container}>
+      <View style={styles.rowText}>
         <Text>{date.toString()}</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          paddingVertical: 3,
-          borderRadius: 5,
-        }}
-      >
+      <View style={styles.rowTask}>
         <Text numberOfLines={1}>{task}</Text>
       </View>
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          backgroundColor: fill,
-          paddingVertical: 3,
-          borderRadius: 5,
-        }}
-      >
-        <Text>{status}</Text>
+      <View style={styles.rowFill}>
+        <Text>{status.replace(/_/g, ' ')}</Text>
       </View>
     </View>
   );

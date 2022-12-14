@@ -11,8 +11,8 @@ export const GET_ALL_USERS = gql`
 `;
 
 export const useGetAllUsers = (): IUser[] => {
-  const { loading, data, error } = useQuery(GET_ALL_USERS);
-
+  const { loading, data, error, refetch } = useQuery(GET_ALL_USERS);
+  refetch();
   if (loading) {
     return [];
   } else if (error) {

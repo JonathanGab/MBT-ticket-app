@@ -48,11 +48,15 @@ export const GET_COMMENTS_BY_TICKET_ID = gql`
 `;
 
 export const useGetCommentByTicketId = (id: number): ICommentProps | null => {
-  const { loading, error, data } = useQuery(GET_COMMENTS_BY_TICKET_ID, {
-    variables: {
-      getCommentsByTicketIdId: id,
-    },
-  });
+  const { loading, error, data, refetch } = useQuery(
+    GET_COMMENTS_BY_TICKET_ID,
+    {
+      variables: {
+        getCommentsByTicketIdId: id,
+      },
+    }
+  );
+  refetch();
   if (loading) {
     return null;
   } else if (error) {

@@ -86,7 +86,7 @@ export const stylesTicketList = StyleSheet.create({
     position: 'absolute',
     bottom: 90,
     right: 30,
-  }
+  },
 });
 
 export const stylesTicketItem = StyleSheet.create({
@@ -101,18 +101,18 @@ export const stylesTicketItem = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 3,
   },
-  edit:{
-    width:'100%',
-    flexDirection:'row',
-    justifyContent:'space-between',
-    alignItems:'center',
+  edit: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   containerRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  body:{
-    marginTop:10,
+  body: {
+    marginTop: 10,
   },
   title: {
     fontSize: 32,
@@ -138,8 +138,6 @@ export const stylesTicketItem = StyleSheet.create({
     marginVertical: 5,
     width: 200,
     textAlign: 'center',
-
-    
   },
   button: {
     alignItems: 'center',
@@ -150,8 +148,9 @@ export const stylesTicketItem = StyleSheet.create({
   },
   showMore: {
     alignItems: 'flex-end',
+    marginRight: 10,
   },
-  more:{
-    color:'#000',
-  }
+  more: {
+    color: '#000',
+  },
 });

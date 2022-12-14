@@ -34,11 +34,12 @@ export const GET_TICKETS_BY_ID = gql`
 `;
 
 export const useGetTicketById = (id: number): ITicket | null => {
-  const { loading, error, data } = useQuery(GET_TICKETS_BY_ID, {
+  const { loading, error, data, refetch } = useQuery(GET_TICKETS_BY_ID, {
     variables: {
       getTicketByIdId: id,
     },
   });
+  refetch();
   if (loading) {
     return null;
   } else if (error) {

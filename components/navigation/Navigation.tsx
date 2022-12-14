@@ -9,6 +9,9 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { LoginContext, ILoginContext } from '../../contexts/LoginContext';
 import { createStackNavigator } from '@react-navigation/stack';
 import TicketEditionPage from '../../screens/TicketEditionPage';
+import TicketPage from '../../screens/TicketPage';
+import CreateTicket from '../../screens/CreateTicket';
+import ProjectEditionPage from '../../screens/ProjectEditionPage';
 
 const Tab = createBottomTabNavigator();
 const RootStack = createStackNavigator();
@@ -71,6 +74,9 @@ export default function AppNav() {
     >
       <RootStack.Screen name="MainTabs" component={Navigation} />
       <RootStack.Screen name="Edit Ticket" component={TicketEditionPage} />
+      <RootStack.Screen name="Ticket" component={TicketPage} />
+      <RootStack.Screen name="Create Ticket" component={CreateTicket} />
+      <RootStack.Screen name="Project" component={ProjectEditionPage} />
     </RootStack.Navigator>
   );
 }

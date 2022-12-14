@@ -16,7 +16,7 @@ export default function DashboardCard({
   data: IProject[] | ITicket[];
 }) {
   const [show, setShow] = useState(true);
-  console.log('data', data);
+
   return (
     <View>
       <DividerComponent orientation="horizontal" color="lightgrey" mt="3" />
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
   section: {
     fontSize: 20,
     paddingBottom: 10,
-    marginLeft: 5,
+    paddingLeft: 10,
     fontStyle: 'italic',
   },
 });
