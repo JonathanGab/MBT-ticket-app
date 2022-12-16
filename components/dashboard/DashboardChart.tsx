@@ -32,6 +32,7 @@ export default function DashboardChart({
           y="NumberOfTickets"
           colorScale={['#f44336', '#e91e63', '#9c27b0']}
           width={450}
+          height={300}
           style={{
             data: {
               fillOpacity: 0.9,

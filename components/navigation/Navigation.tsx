@@ -47,6 +47,7 @@ function Navigation() {
 
         tabBarActiveTintColor: '#E29578',
         tabBarInactiveTintColor: '#ced4da',
+        headerShown: false,
       })}
     >
       {valueAsyncStorage.token === null ? (
@@ -69,10 +70,10 @@ export default function AppNav() {
   return (
     <RootStack.Navigator
       screenOptions={{
-        headerShown: false,
+        headerShown: true,
       }}
     >
-      <RootStack.Screen name="MainTabs" component={Navigation} />
+      <RootStack.Screen name="Projects List" component={Navigation} />
       <RootStack.Screen name="Edit Ticket" component={TicketEditionPage} />
       <RootStack.Screen name="Ticket" component={TicketPage} />
       <RootStack.Screen name="Create Ticket" component={CreateTicket} />

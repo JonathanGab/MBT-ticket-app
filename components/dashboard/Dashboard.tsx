@@ -34,6 +34,7 @@ export function chooseRandomColor(): string {
     '#DBFEB8',
   ];
   const randomColor = arrayColor[Math.floor(Math.random() * arrayColor.length)];
+
   return randomColor;
 }
 

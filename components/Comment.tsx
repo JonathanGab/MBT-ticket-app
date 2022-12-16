@@ -4,6 +4,7 @@ import { useGetTicketById } from '../hooks/query/useGetTicketById';
 import ITicket from './Interface/ITicket';
 import { AuthContext, IAuthContextProps } from '../contexts/AuthContext';
 import * as dateFns from 'date-fns';
+
 type CommentProps = {
   content: string;
   user: string;

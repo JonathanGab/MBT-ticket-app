@@ -4,13 +4,13 @@ export const ADD_COMMENT = gql`
   mutation addComment(
     $content: String!
     $publishedAt: Date!
-    $user: UserInput!
+    $users: UserInput!
     $ticket: TicketInput!
   ) {
     createNewComment(
       content: $content
       published_at: $publishedAt
-      User: $user
+      Users: $users
       Ticket: $ticket
     ) {
       User {

@@ -9,6 +9,8 @@ import { AuthContext, IAuthContextProps } from '../contexts/AuthContext';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import { DrawerNavigationProp } from '@react-navigation/drawer';
+import ModalButton from '../components/modal/ModalButton';
+import DashboardProject from '../components/project/DashboardProject';
 
 type ListScreenProp = DrawerNavigationProp<
   { 'Create Ticket': undefined },
@@ -18,10 +20,7 @@ type ListScreenProp = DrawerNavigationProp<
 export default function TicketPage() {
   const { getProjectId } = useContext(AuthContext) as IAuthContextProps;
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
-  // const [filters, setFilters] = useState<IFilter>({
-  //   project: Number(getProjectId),
-  //   user: Number(valueAsyncStorage.userId),
-  // });
+  const [open, setOpen] = useState<boolean>(false);
   const [filters, setFilters] = useState<IFilter>({
     project: Number(getProjectId),
     user: Number(valueAsyncStorage.userId),
@@ -34,14 +33,22 @@ export default function TicketPage() {
 
   return (
     <View style={stylesTicketList.container}>
-      <Text style={stylesTicketList.title}>Ticket List</Text>
       <FilterItem setFilterValue={handleFiltersValue} actualValues={filters} />
+      <View style={{ alignSelf: 'flex-end' }}>
+        <ModalButton
+          iconName="question-circle"
+          setOpen={setOpen}
+          length={0}
+          notif={false}
+        />
+      </View>
       <TickerList filters={filters} />
       <View style={stylesTicketList.addTicket}>
         <Pressable onPress={() => navigation.navigate('Create Ticket')}>
           <Ionicons name={'add-circle-outline'} size={50} color={'black'} />
         </Pressable>
       </View>
+      <DashboardProject open={open} setOpen={setOpen} />
     </View>
   );
 }

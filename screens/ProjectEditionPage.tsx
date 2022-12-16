@@ -92,11 +92,6 @@ export default function ProjectEditionPage() {
           }),
         },
       });
-
-      // setProjectName('');
-      // setStartDate(new Date());
-      // setEndDate(new Date());
-      // setDesc('');
       navigation.navigate('List');
     } catch (err) {
       console.error({ message: err });

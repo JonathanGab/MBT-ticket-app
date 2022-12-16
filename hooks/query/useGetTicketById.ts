@@ -19,16 +19,12 @@ export const GET_TICKETS_BY_ID = gql`
         name
       }
       Comment {
-        User {
-          name
-          email
-          id
-        }
         id
         content
         published_at
         modified_at
       }
+      nbrOfComments
     }
   }
 `;

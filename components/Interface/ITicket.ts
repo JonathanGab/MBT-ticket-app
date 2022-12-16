@@ -25,4 +25,5 @@ export default interface ITicket {
       content: string;
     }
   ];
+  nbrOfComments?: number;
 }

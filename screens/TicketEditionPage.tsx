@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { AuthContext, IAuthContextProps } from '../contexts/AuthContext';
 import { useGetTicketById } from '../hooks/query/useGetTicketById';
 import {
@@ -35,6 +35,8 @@ import Comment from '../components/Comment';
 import ModalButton from '../components/modal/ModalButton';
 import ModalView from '../components/modal/ModalView';
 import { LoginContext, ILoginContext } from '../contexts/LoginContext';
+import TimelogModal from '../components/timelogs/TimelogModal';
+
 export default function TicketEditionPage() {
   const { getTicketId } = useContext(AuthContext) as IAuthContextProps;
   const { valueAsyncStorage } = useContext(LoginContext) as ILoginContext;
@@ -51,7 +53,8 @@ export default function TicketEditionPage() {
   const [priority, setPriority] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const [open, setOpen] = useState(false);
+  const [openCommentModal, setOpenCommentModal] = useState(false);
+  const [openTimelogModal, setOpenTimelogModal] = useState(false);
 
   const users = useGetAllUsers();
 
@@ -93,11 +96,15 @@ export default function TicketEditionPage() {
           description: description !== '' ? description : ticketId?.description,
           status: status !== '' ? status : ticketId?.status,
           labels: label !== '' ? label : ticketId?.labels,
-          users: [
-            {
-              id: user,
-            },
-          ],
+          // users: [
+          //   user !== null
+          //     ? {
+          //         id: user,
+          //       }
+          //     : {
+          //         id: ticketId?.Users[0].id,
+          //       },
+          // ],
           priority: priority !== '' ? priority : ticketId?.priority,
           difficulty: difficulty !== null ? difficulty : ticketId?.difficulty,
         },
@@ -124,12 +131,24 @@ export default function TicketEditionPage() {
                 style={{
                   width: '100%',
                   alignItems: 'flex-end',
+                  justifyContent: 'flex-end',
+                  flexDirection: 'row',
                 }}
               >
-                <ModalButton setOpen={setOpen} length={3} />
+                <ModalButton
+                  setOpen={setOpenTimelogModal}
+                  length={3}
+                  iconName={'clock'}
+                  notif={false}
+                />
+                <ModalButton
+                  setOpen={setOpenCommentModal}
+                  length={ticketId?.nbrOfComments as number}
+                  iconName={'comment-alt'}
+                  notif={true}
+                />
               </View>
             </View>
-
             <Center>
               <Stack space={4} w="350px" my="10px">
                 <Input
@@ -285,16 +304,21 @@ export default function TicketEditionPage() {
               width="100%"
               backgroundColor="#E29578"
               onPress={(e: any) => submitUpdatedTicket(e)}
-              text="Create"
+              text="Edit"
               height="35"
             />
           </View>
         </ScrollView>
       </View>
       <ModalView
-        open={open}
-        setOpen={setOpen}
-        userId={valueAsyncStorage.userId}
+        open={openCommentModal}
+        setOpen={setOpenCommentModal}
+        userId={valueAsyncStorage.userId as number}
+      />
+      <TimelogModal
+        open={openTimelogModal}
+        setOpen={setOpenTimelogModal}
+        userId={valueAsyncStorage.userId as number}
       />
     </>
   );

@@ -4,7 +4,7 @@ import React from 'react';
 type CardType = {
   icon: JSX.Element;
   text: string;
-  number: number;
+  number?: number;
   color?: string;
 };
 export default function DashboardIcon({
@@ -56,5 +56,5 @@ export default function DashboardIcon({
         </View>
       </View>
     </View>
-  );  
+  );
 }

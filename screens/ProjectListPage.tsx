@@ -1,5 +1,5 @@
 import { View, StyleSheet, FlatList } from 'react-native';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import ProjectList from '../components/card/ProjectList';
 import IProject, {
   useGetProjectByCurrentUser,
@@ -22,7 +22,6 @@ export default function ProjectListPage() {
 
   const projectByUserId: IProject[] | undefined | null =
     useGetProjectByCurrentUser(Number(valueAsyncStorage.userId));
-
   return (
     <View style={styles.container}>
       <FlatList

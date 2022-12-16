@@ -15,8 +15,20 @@ export default interface IProject {
   updated_at?: Date;
   status: string;
   Users: IUsers[];
-  Tickets?: [{ id: number }];
+  Tickets?: [
+    {
+      id: number;
+      status: string;
+      title: string;
+      Timelog: [{ id: number; spent_time: number }];
+    }
+  ];
   picture_id?: number;
+  nbrOfTickets?: number;
+  nbrOfOpenTickets: number;
+  nbrOfTicketsInProgress: number;
+  nbrOfClosedTickets: number;
+  timeSpentOnProject: number;
 }
 
 export const GET_PROJECT_BY_ID = gql`
@@ -34,6 +46,20 @@ export const GET_PROJECT_BY_ID = gql`
         name
         email
       }
+      Tickets {
+        Timelog {
+          id
+          spent_time
+        }
+        id
+        title
+      }
+      nbrOfTickets
+      nbrOfTicketsInProgress
+      nbrOfOpenTickets
+      nbrOfClosedTickets
+      status
+      timeSpentOnProject
     }
   }
 `;

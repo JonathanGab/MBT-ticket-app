@@ -5,7 +5,7 @@ export const UPDATE_TICKET = gql`
     $updateTicketByIdId: ID!
     $title: String
     $description: String
-    $status: String
+    $status: StatusEnum
     $labels: String
     $priority: String
     $difficulty: Int

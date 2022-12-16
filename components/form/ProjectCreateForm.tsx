@@ -88,7 +88,6 @@ export default function ProjectCreateForm(): JSX.Element {
   };
 
   const users = useGetAllUsers();
-
   return (
     <View style={styles.cardStyle}>
       <View style={styles.cardStyleBox}>

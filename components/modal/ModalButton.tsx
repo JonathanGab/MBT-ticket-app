@@ -13,8 +13,8 @@ function BadgeComment({ length }: { length: number }) {
           mb={-3}
           variant="solid"
           alignSelf="center"
-          h={8}
-          w={8}
+          h={length > 9 ? 8 : 6}
+          w={length > 9 ? 8 : 6}
           _text={{
             fontSize: 12,
           }}
@@ -29,9 +29,13 @@ function BadgeComment({ length }: { length: number }) {
 export default function ModalButton({
   setOpen,
   length,
+  iconName,
+  notif = true,
 }: {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   length: number;
+  iconName: string;
+  notif: boolean;
 }) {
   return (
     <TouchableOpacity
@@ -41,8 +45,8 @@ export default function ModalButton({
       }}
       onPress={() => setOpen(true)}
     >
-      <BadgeComment length={length} />
-      <FontAwesome5 name="comment-alt" size={30} color="black" />
+      {notif && <BadgeComment length={length} />}
+      <FontAwesome5 name={iconName} size={30} color="black" />
     </TouchableOpacity>
   );
 }

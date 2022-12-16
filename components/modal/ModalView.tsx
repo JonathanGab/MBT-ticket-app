@@ -2,15 +2,15 @@ import { Modal, Text, TextArea } from 'native-base';
 import React, { useState, useContext } from 'react';
 import { AuthContext, IAuthContextProps } from '../../contexts/AuthContext';
 import { useMutation, useQuery } from '@apollo/client';
-import { View, FlatList, StyleSheet } from 'react-native';
+import { View, FlatList, StyleSheet, ListRenderItemInfo } from 'react-native';
 import * as dateFns from 'date-fns';
-import {
-  useGetTicketById,
-  GET_TICKETS_BY_ID,
-} from '../../hooks/query/useGetTicketById';
-import ITicket from '../Interface/ITicket';
+import { GET_TICKETS_BY_ID } from '../../hooks/query/useGetTicketById';
 import { ADD_COMMENT } from '../../hooks/mutations/useAddComment';
 import BtnSubmit from '../utils/BtnSubmit';
+import {
+  ICommentProps,
+  useGetCommentByTicketId,
+} from '../../hooks/query/useGetComment';
 
 type CommentProps = {
   content: string;
@@ -18,7 +18,15 @@ type CommentProps = {
   time?: string;
 };
 
-export default function ModalView({ open, setOpen, userId }: any) {
+export default function ModalView({
+  open,
+  setOpen,
+  userId,
+}: {
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  userId: number;
+}) {
   const { getTicketId } = useContext(AuthContext) as IAuthContextProps;
 
   const [addComment, { data, loading, error }] = useMutation(ADD_COMMENT);
@@ -26,9 +34,8 @@ export default function ModalView({ open, setOpen, userId }: any) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [textAreaValue, setTextAreaValue] = useState('');
 
-  const commentByTicketID: ITicket | undefined | null = useGetTicketById(
-    getTicketId as number
-  );
+  const commentByTicketID: ICommentProps[] | undefined | null =
+    useGetCommentByTicketId(getTicketId as number);
 
   const {
     loading: loadingQuery,
@@ -46,16 +53,24 @@ export default function ModalView({ open, setOpen, userId }: any) {
         variables: {
           content: textAreaValue,
           publishedAt: new Date(),
-          user: { id: Number(userId) },
+          users: { id: Number(userId) },
           ticket: { id: Number(getTicketId) },
         },
       });
       setTextAreaValue('');
       refetch();
     } catch (err) {
-      console.error(error);
+      console.error(err);
     }
   };
+
+  // "content": "je post depuis gql",
+  // "users": {
+  //   "id": 10
+  // },
+  // "ticket": {
+  //   "id": 21
+  // },
 
   // function for displaying the time since the comment was published
   const publishedSince = (date: string) => {
@@ -110,7 +125,7 @@ export default function ModalView({ open, setOpen, userId }: any) {
     </View>
   );
 
-  const renderItem = ({ item }: any) => (
+  const renderItem = ({ item }: any): JSX.Element => (
     <CommentComponent
       content={item.content}
       user={item?.User?.name}
@@ -129,9 +144,9 @@ export default function ModalView({ open, setOpen, userId }: any) {
         <Modal.CloseButton onPress={() => setOpen(false)} />
         <Modal.Header>Comments</Modal.Header>
         <FlatList
-          data={commentByTicketID?.Comment}
+          data={commentByTicketID}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item: any) => item.id.toString()}
         />
         <Modal.Footer>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>

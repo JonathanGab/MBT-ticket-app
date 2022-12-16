@@ -26,28 +26,16 @@ export const GET_COMMENTS_BY_TICKET_ID = gql`
   query GetCommentsByTicketId($getCommentsByTicketIdId: ID) {
     getCommentsByTicketId(id: $getCommentsByTicketIdId) {
       id
-      title
-      description
-      estimated_time
-      spent_time
-      status
-      labels
-      priority
-      difficulty
-      projectId
-      Users {
-        id
+      User {
         name
       }
-      Comments {
-        id
-        content
-      }
+      content
+      published_at
     }
   }
 `;
 
-export const useGetCommentByTicketId = (id: number): ICommentProps | null => {
+export const useGetCommentByTicketId = (id: number): ICommentProps[] | null => {
   const { loading, error, data, refetch } = useQuery(
     GET_COMMENTS_BY_TICKET_ID,
     {
